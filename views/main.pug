@@ -1,7 +1,8 @@
 html
   head
     title Titan
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css')
+    link(rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css')
+    link(rel='stylesheet' href='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css')
     link(rel='stylesheet' href='/css/style.css')
     link(rel='shortcut icon' href='/images/logo.png')
   body
@@ -15,8 +16,15 @@ html
                 li
                     a(href='/' + userId + '/calendar') Calendar
 
-    block content
+    .container
+        block content
 
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js')
+    script(type='text/javascript').
+        var USER =!{JSON.stringify(USER)}
+
+    script(src='//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js')
+    script(src='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js')
+    script(src='http://momentjs.com/downloads/moment.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js')
     script(src='/js/app.js')

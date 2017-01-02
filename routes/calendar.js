@@ -6,9 +6,10 @@ module.exports = function route(req, res) {
             return console.error(err);
         }
 
+        res.locals.USER = user;
+
         res.render('calendar', {
-            userId: req.params.userId,
-            users: users,
+            userId: req.params.userId
         });
     });
 };

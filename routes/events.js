@@ -10,9 +10,10 @@ module.exports = function route(req, res) {
             return res.render('nouser');
         }
 
+        res.locals.USER = user;
+
         res.render('events', {
-            userId: req.params.userId,
-            user: user,
+            userId: req.params.userId
         });
     });
 };

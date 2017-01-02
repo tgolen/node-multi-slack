@@ -1,5 +1,6 @@
 var express = require('express');
 var favicon = require('serve-favicon');
+var moment = require('moment');
 var mainController = require('./controllers/main');
 var db = require('./lib/db');
 
@@ -20,6 +21,7 @@ db.connect(function(err, connection) {
     app.set('view engine', 'pug');
     app.use(express.static('public'));
     app.use(favicon(__dirname + '/public/images/logo.png'));
+    app.locals.moment = moment;
 
     app.get('/:userId/', function (req, res) {
         res.render('index', {
