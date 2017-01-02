@@ -14,16 +14,22 @@ app.set('view engine', 'pug');
 app.use(express.static('public'));
 app.use(favicon(__dirname + '/public/images/logo.png'));
 
-app.get('/', function (req, res) {
-    res.render('index');
+app.get('/:userId/', function (req, res) {
+    res.render('index', {
+        userId: req.params.userId,
+    });
 });
 
-app.get('/events', function (req, res) {
-    res.render('events');
+app.get('/:userId/events', function (req, res) {
+    res.render('events', {
+        userId: req.params.userId,
+    });
 });
 
-app.get('/calendar', function (req, res) {
-    res.render('calendar');
+app.get('/:userId/calendar', function (req, res) {
+    res.render('calendar', {
+        userId: req.params.userId,
+    });
 });
 
 app.listen(process.env.PORT || 3000, function () {

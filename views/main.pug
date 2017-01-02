@@ -7,13 +7,13 @@ html
   body
     nav
         div(class='nav-wrapper')
-            a(href='/' class='brand-logo right')
+            a(href='/' + userId class='brand-logo right')
                 img(src='/images/logo.png')
             ul(class='left')
                 li
-                    a(href='events') My Events
+                    a(href='/' + userId + '/events') My Events
                 li
-                    a(href='calendar') Calendar
+                    a(href='/' + userId + '/calendar') Calendar
 
     block content
 
