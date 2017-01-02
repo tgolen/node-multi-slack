@@ -29,7 +29,7 @@ module.exports = function list(bot, message) {
                 url += ':' + process.env.PORT
             }
             url += '/' + user.id + '/events';
-            convo.addMessage(url, channels.DEFAULT);
+            convo.addMessage('Direct your gaze towards ' + url, channels.DEFAULT);
         });
     });
 };
