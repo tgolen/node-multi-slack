@@ -19,6 +19,7 @@ module.exports = function reset(bot, message) {
 + '`add 2017-01-01`\n'
 + 'See http://momentjs.com/docs/#/parsing/string/ for examples for date and time formats.\n\n'
 + 'You can *list* events with `list`\n\n'
++ 'You can *view* a graph of your events with `view`\n\n'
 + 'You can *remove* events with `remove <event_id>` (get the event ID from `list`)', channels.DEFAULT);
     });
 };

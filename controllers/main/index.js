@@ -21,6 +21,7 @@ exports.start = function start() {
     controller.hears(['add (.*)'], 'direct_message,direct_mention,mention', require('./listeners/add'));
     controller.hears(['remove (.*)'], 'direct_message,direct_mention,mention', require('./listeners/remove'));
     controller.hears(['help'], 'direct_message,direct_mention,mention', require('./listeners/help'));
+    controller.hears(['view'], 'direct_message,direct_mention,mention', require('./listeners/view'));
 
     return bot;
 };
