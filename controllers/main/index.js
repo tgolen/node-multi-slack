@@ -19,6 +19,7 @@ exports.start = function start() {
     controller.hears(['reset'], 'direct_message,direct_mention,mention', require('./listeners/reset'));
     controller.hears(['list'], 'direct_message,direct_mention,mention', require('./listeners/list'));
     controller.hears(['add (.*)'], 'direct_message,direct_mention,mention', require('./listeners/add'));
+    controller.hears(['help'], 'direct_message,direct_mention,mention', require('./listeners/help'));
 
     return bot;
 };
