@@ -11,5 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "botkit": "^0.4.6"
+  },
+  "scripts": {
+    "start": "nf start slackbot"
   }
 }
