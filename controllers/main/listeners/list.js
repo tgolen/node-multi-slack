@@ -1,3 +1,4 @@
+var Moment = require('moment');
 var channels = require('../channels');
 var controller = require('../index').getController();
 
@@ -30,7 +31,13 @@ module.exports = function list(bot, message) {
             } else {
                 var message = '';
                 for (var i = 0; i < user.events.length; i++) {
-                    message += '[' + i + '] ' + user.events[i].start + ' - ' + user.events[i].end + '\n';
+                    var start = new Moment(user.events[i].start);
+                    var end = new Moment(user.events[i].end);
+                    message += '`' + i + '` ' + start.format('dddd, MMMM Do YYYY, h:mm:ss a') + ' - ' + end.format('dddd, MMMM Do YYYY, h:mm:ss a');
+                    if (user.events[i].reason && user.events[i].reasonPrefix) {
+                        message += ' ' + user.events[i].reasonPrefix + ' ' + user.events[i].reason;
+                    }
+                    message += '\n';
                 }
                 convo.addMessage(message, channels.DEFAULT);
             }
