@@ -51,6 +51,10 @@ function displaySelectedDate(date) {
                 var event = user.events[j];
                 if (moment(date).isBetween(moment(event.start), moment(event.end), 'day', '[]')) {
                     usersGone[user.id] = user;
+                    if (!usersGone[user.id].matchedEvents) {
+                        usersGone[user.id].matchedEvents = [];
+                    }
+                    usersGone[user.id].matchedEvents.push(event);
                 }
             }
         }
@@ -60,7 +64,26 @@ function displaySelectedDate(date) {
     var $resultCollection = $('<ul class="collection">');
 
     $.each(usersGone, function(userId, user) {
-        $resultCollection.append('<li class="collection-item">'+user.id+'</li>');
+        var $item = $('<li class="collection-item avatar">');
+        $item.append('<img src="'+user.slackUser.profile.image_72+'" alt="" class="circle">');
+        $item.append('<span class="title">'+user.slackUser.real_name+'</span>');
+        $.each(user.matchedEvents, function(i, event) {
+            var $event = $('<p>');
+            var start = moment(event.start);
+            var end = moment(event.end);
+
+            if (end.diff(start, 'days') > 0) {
+                $event.append(' All day');
+            } else {
+                $event.append(' ' + start.format('h:mma') + ' - ' + end.format('h:mma'));
+            }
+            if (event.reasonPrefix && event.reason) {
+                $event.append(' ' + event.reasonPrefix + ' ' + event.reason);
+                $event.append('<br />');
+            }
+            $item.append($event);
+        });
+        $resultCollection.append($item);
     });
 
     $results.html($resultCollection);
