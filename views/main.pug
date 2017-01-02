@@ -14,13 +14,14 @@ html
                 li
                     a(href='/' + userId + '/events') My Events
                 li
-                    a(href='/' + userId + '/calendar') Calendar
+                    a(href='/' + userId + '/calendar') Everyone's Events
 
     .container
         block content
 
     script(type='text/javascript').
-        var USER =!{JSON.stringify(USER)}
+        var USER =!{JSON.stringify(USER || null)}
+        var USERS =!{JSON.stringify(USERS || [])}
 
     script(src='//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js')
     script(src='//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js')
