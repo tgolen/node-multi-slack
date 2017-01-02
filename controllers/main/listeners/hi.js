@@ -6,13 +6,13 @@ var conversationSetup = require('../conversations/setup');
  * @param  {Object} bot
  * @param  {Object} message
  */
-module.exports = function hi(bot, message, controller) {
+module.exports = function hi(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
             return console.error(err);
         }
 
-        conversationGreeting(convo);
-        conversationSetup(convo);
+        conversationGreeting(convo, message);
+        conversationSetup(convo, message);
     });
 };

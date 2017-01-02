@@ -1,8 +1,8 @@
 var Botkit = require('botkit');
 var controller = Botkit.slackbot({
     debug: process.env.NODE_ENV !== 'production',
+    storage: require('botkit-storage-mongo')({mongoUri: process.env.DATABASE_URL})
 });
-var listenerHi = require('./listeners/hi');
 var bot;
 
 /**
@@ -15,7 +15,23 @@ exports.start = function start() {
         token: process.env.SLACKBOT_TOKEN
     }).startRTM();
 
-    controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {listenerHi(bot, message, controller)});
+    controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
 
+    return bot;
+};
+
+/**
+ * Get the botkit controller
+ * @return {Object}
+ */
+exports.getController = function getController() {
+    return controller;
+}
+
+/**
+ * Get the running bot
+ * @return {Object}
+ */
+exports.getBot = function getController() {
     return bot;
 }

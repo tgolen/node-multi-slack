@@ -10,7 +10,8 @@
   "author": "Tim Golen <tgolen@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "botkit": "^0.4.6"
+    "botkit": "^0.4.6",
+    "botkit-storage-mongo": "1.0.4"
   },
   "scripts": {
     "start": "nf start slackbot"

@@ -10,8 +10,7 @@ module.exports = function greeting(convo) {
         {
             pattern: new RegExp(/^(good|fine)/i),
             callback: function (res, convo) {
-                convo.addMessage('I\'m glad to hear that!', channels.DEFAULT);
-                convo.changeTopic(channels.SETUP);
+                convo.transitionTo(channels.SETUP, 'I\'m glad to hear that!');
                 convo.next();
             }
         },
@@ -19,9 +18,7 @@ module.exports = function greeting(convo) {
             pattern: new RegExp(/^(bad|shitty|poor)/i),
             callback: function (res, convo) {
                 convo.addMessage('I\'m sorry to hear that :slightly_frowning_face:', channels.DEFAULT);
-                convo.addMessage('Maybe this will cheer you up. :pig2:', channels.DEFAULT);
-                convo.addMessage('I just love bacon.', channels.DEFAULT);
-                convo.changeTopic(channels.SETUP);
+                convo.transitionTo(channels.SETUP, 'Maybe this will cheer you up. :pig2:');
                 convo.next();
             }
         },
