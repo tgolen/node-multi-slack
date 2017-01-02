@@ -76,7 +76,7 @@ var controller = Botkit.slackbot({
 });
 
 var bot = controller.spawn({
-    token: process.env.token
+    token: process.env.SLACKBOT_TOKEN
 }).startRTM();
 
 
