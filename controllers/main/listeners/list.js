@@ -21,12 +21,12 @@ module.exports = function list(bot, message) {
             }
 
             if (!user) {
-                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself');
+                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself.');
                 return;
             }
 
             if (!user.events || !user.events.length) {
-                convo.addMessage('You have not set up any out of the office times. You can add one now by telling me `add 1/1/2017`', channels.DEFAULT);
+                convo.addMessage('You have not set up any out of the office times.', channels.DEFAULT);
                 return;
             } else {
                 var message = '';

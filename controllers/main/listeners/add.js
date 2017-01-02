@@ -19,7 +19,7 @@ module.exports = function add(bot, message) {
                 console.error(err);
             }
             if (!user) {
-                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself');
+                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself.');
                 return;
             }
 
