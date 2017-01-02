@@ -16,6 +16,7 @@ exports.start = function start() {
     }).startRTM();
 
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
+    controller.hears(['reset'], 'direct_message,direct_mention,mention', require('./listeners/reset'));
 
     return bot;
 };
