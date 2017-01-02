@@ -1,0 +1,12 @@
+{
+  "name": "titan-slack",
+  "version": "1.0.0",
+  "description": "A slack bot for working with calendar events",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/tgolen/titan-slack.git",
+    "type": "git"
+  },
+  "author": "Tim Golen <tgolen@gmail.com>",
+  "license": "MIT"
+}
