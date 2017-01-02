@@ -2,11 +2,11 @@ var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
- * Reponds with a private message when someone says "hi"
+ * Resets all the settings for a user
  * @param  {Object} bot
  * @param  {Object} message
  */
-module.exports = function hi(bot, message) {
+module.exports = function reset(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
             return console.error(err);

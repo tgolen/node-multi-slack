@@ -2,11 +2,11 @@ var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
- * Reponds with a private message when someone says "hi"
+ * Lits all of the OOO events a user has set
  * @param  {Object} bot
  * @param  {Object} message
  */
-module.exports = function hi(bot, message) {
+module.exports = function list(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
             return console.error(err);
