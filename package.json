@@ -19,6 +19,6 @@
     "serve-favicon": "2.3.2"
   },
   "scripts": {
-    "start": "nf start slackbot"
+    "start": "nf start web"
   }
 }
