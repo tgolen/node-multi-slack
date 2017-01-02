@@ -1,6 +1,5 @@
 var channels = require('../channels');
 var controller = require('../index').getController();
-var bot = require('../index').getBot();
 
 /**
  * Sets the user up for the first time
