@@ -8,5 +8,8 @@
     "type": "git"
   },
   "author": "Tim Golen <tgolen@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "^0.4.6"
+  }
 }
