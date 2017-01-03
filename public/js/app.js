@@ -8,8 +8,8 @@ var allUsers = [];
 function mixinDataForUser(user, data) {
     if (user.events && user.events.length) {
         for (var i = 0; i < user.events.length; i++) {
-            var start = moment.utc(user.events[i].start);
-            var end = moment.utc(user.events[i].end);
+            var start = moment(user.events[i].start);
+            var end = moment(user.events[i].end);
 
             // Add all of our start days
             if (!data[start.unix()]) {
@@ -22,7 +22,7 @@ function mixinDataForUser(user, data) {
             if (user.events[i].start !== user.events[i].end) {
                 var diffInDays = end.diff(start, 'days');
                 for (var j = 0; j < diffInDays; j++) {
-                    var recurringDay = moment.utc(start).add(j + 1, 'day');
+                    var recurringDay = moment(user.events[i].start).add(j + 1, 'day');
 
                     if (!data[recurringDay.unix()]) {
                         data[recurringDay.unix()] = 1;
@@ -49,7 +49,7 @@ function displaySelectedDate(date) {
             // Loop through every event
             for (var j = 0; j < user.events.length; j++) {
                 var event = user.events[j];
-                if (moment.utc(date).isBetween(moment.utc(event.start), moment.utc(event.end), 'day', '[]')) {
+                if (moment(date).isBetween(moment.utc(event.start), moment.utc(event.end), 'day', '[]')) {
                     if (!usersGone[user.id]) {
                         usersGone[user.id] = user;
                         usersGone[user.id].matchedEvents = [];
