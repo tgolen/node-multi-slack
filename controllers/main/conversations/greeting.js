@@ -15,7 +15,7 @@ module.exports = function greeting(convo, message) {
 
         // Their user hasn't been setup yet, so send them to the setup
         if (!user) {
-            return convo.addQuestion('How do you fair on this fine day?', [
+            return convo.addQuestion('How do you fare on this fine day?', [
                 {
                     pattern: new RegExp(/^(good|fine)/i),
                     callback: function (res, convo) {
