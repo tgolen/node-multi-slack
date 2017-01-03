@@ -84,8 +84,8 @@ module.exports = function add(bot, message) {
                 user.events = [];
             }
             user.events.push({
-                start: startDate.toDate(),
-                end: endDate.toDate(),
+                start: Moment(startDate.unix() - user.slackUser.tz_offset).toDate(),
+                end: Moment(endDate.unix() - user.slackUser.tz_offset).toDate(),
                 reason: reason,
                 reasonPrefix: reasonPrefix,
             });
