@@ -23,12 +23,11 @@ module.exports = function list(bot, message) {
                 return;
             }
 
-            var protocol = process.env.PORT === 443 ? 'https' : 'http';
-            var url = protocol + '://' + process.env.HOST;
-            if (process.env.PORT !== 80 && process.env.PORT !== 443) {
-                url += ':' + process.env.PORT
-            }
+            var url = process.env.NODE_ENV === 'production'
+                ? 'https://' + process.env.HOST
+                : 'http://' + process.env.HOST + ':' + process.env.PORT;
             url += '/' + user.id + '/events';
+
             convo.addMessage('Direct your gaze towards ' + url, channels.DEFAULT);
         });
     });
