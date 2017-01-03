@@ -21,13 +21,18 @@ function mixinDataForUser(user, data) {
             // Add all the subsequent days
             if (user.events[i].start !== user.events[i].end) {
                 var diffInDays = end.diff(start, 'days');
-                for (var j = 0; j < diffInDays; j++) {
-                    var recurringDay = moment(user.events[i].start).add(j + 1, 'day');
+                var diffInMinutes = end.diff(start, 'minutes');
 
-                    if (!data[recurringDay.unix()]) {
-                        data[recurringDay.unix()] = 1;
-                    } else {
-                        data[recurringDay.unix()] += 1;
+                // Make sure there is at least a full day between them
+                if (diffInMinutes > 1440) {
+                    for (var j = 0; j < diffInDays; j++) {
+                        var recurringDay = moment(user.events[i].start).add(j + 1, 'day');
+
+                        if (!data[recurringDay.unix()]) {
+                            data[recurringDay.unix()] = 1;
+                        } else {
+                            data[recurringDay.unix()] += 1;
+                        }
                     }
                 }
             }
