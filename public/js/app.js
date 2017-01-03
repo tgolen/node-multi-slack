@@ -8,8 +8,8 @@ var allUsers = [];
 function mixinDataForUser(user, data) {
     if (user.events && user.events.length) {
         for (var i = 0; i < user.events.length; i++) {
-            var start = new moment(user.events[i].start);
-            var end = new moment(user.events[i].end);
+            var start = moment.utc(user.events[i].start);
+            var end = moment.utc(user.events[i].end);
 
             // Add all of our start days
             if (!data[start.unix()]) {
@@ -22,7 +22,7 @@ function mixinDataForUser(user, data) {
             if (user.events[i].start !== user.events[i].end) {
                 var diffInDays = end.diff(start, 'days');
                 for (var j = 0; j < diffInDays; j++) {
-                    var recurringDay = moment(start).add(j + 1, 'day');
+                    var recurringDay = moment.utc(start).add(j + 1, 'day');
 
                     if (!data[recurringDay.unix()]) {
                         data[recurringDay.unix()] = 1;
@@ -49,7 +49,7 @@ function displaySelectedDate(date) {
             // Loop through every event
             for (var j = 0; j < user.events.length; j++) {
                 var event = user.events[j];
-                if (moment(date).isBetween(moment(event.start), moment(event.end), 'day', '[]')) {
+                if (moment.utc(date).isBetween(moment.utc(event.start), moment.utc(event.end), 'day', '[]')) {
                     if (!usersGone[user.id]) {
                         usersGone[user.id] = user;
                         usersGone[user.id].matchedEvents = [];
@@ -73,8 +73,8 @@ function displaySelectedDate(date) {
         }
         $.each(user.matchedEvents, function(i, event) {
             var $event = $('<p>');
-            var start = moment(event.start);
-            var end = moment(event.end);
+            var start = moment.utc(event.start);
+            var end = moment.utc(event.end);
 
             if (end.diff(start, 'days') > 0) {
                 $event.append(' All day');

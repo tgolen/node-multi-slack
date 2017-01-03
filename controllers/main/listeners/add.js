@@ -28,11 +28,11 @@ module.exports = function add(bot, message) {
              */
             function couldNotUnderstand() {
                 convo.addMessage('You can command me by saying `add <date-time> for <length of time> at|on <reason>`. For example:\n'
-    + '`add 2017-01-01 for 1 day on vacation`\n'
-    + '`add 2017-01-01 14:30 for 1 hour at DR. Appointment`\n'
-    + '`add 2017-01-01 on holiday`\n'
-    + '`add 2017-01-01`\n'
-    + 'See http://momentjs.com/docs/#/parsing/string/ for examples for date and time formats.', channels.DEFAULT);
+                    + '`add 2017-01-01 for 1 day on vacation`\n'
+                    + '`add 2017-01-01 14:30 for 1 hour at DR. Appointment`\n'
+                    + '`add 2017-01-01 on holiday`\n'
+                    + '`add 2017-01-01`\n'
+                    + 'See http://momentjs.com/docs/#/parsing/string/ for examples for date and time formats.', channels.DEFAULT);
             }
 
             // Parse our dates and reasons
