@@ -50,8 +50,8 @@ function displaySelectedDate(date) {
             for (var j = 0; j < user.events.length; j++) {
                 var event = user.events[j];
                 if (moment(date).isBetween(moment(event.start), moment(event.end), 'day', '[]')) {
-                    usersGone[user.id] = user;
-                    if (!usersGone[user.id].matchedEvents) {
+                    if (!usersGone[user.id]) {
+                        usersGone[user.id] = user;
                         usersGone[user.id].matchedEvents = [];
                     }
                     usersGone[user.id].matchedEvents.push(event);
@@ -60,15 +60,15 @@ function displaySelectedDate(date) {
         }
     }
 
-    var $results = $('#cal-day-results').empty();
+    var $results = $('#cal-day-results');
     var $resultCollection = $('<ul class="collection">');
 
     $.each(usersGone, function(userId, user) {
-        var $item = $('<li class="collection-item avatar">').empty();
+        var $item = $('<li class="collection-item avatar">');
         $item.append('<img src="'+user.slackUser.profile.image_72+'" alt="" class="circle">');
         $item.append('<span class="title">'+user.slackUser.real_name+'</span>');
         $.each(user.matchedEvents, function(i, event) {
-            var $event = $('<p>').empty();
+            var $event = $('<p>');
             var start = moment(event.start);
             var end = moment(event.end);
 
