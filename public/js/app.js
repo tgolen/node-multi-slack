@@ -60,10 +60,10 @@ function displaySelectedDate(date) {
         }
     }
 
-    var $results = $('#cal-day-results');
+    var $results = $('#cal-day-results').empty();
+    var $resultCollection = $('<ul class="collection">');
 
     $.each(usersGone, function(userId, user) {
-        var $resultCollection = $('<ul class="collection">');
         var $item = $('<li class="collection-item avatar">');
         $item.append('<img src="'+user.slackUser.profile.image_72+'" alt="" class="circle">');
         $item.append('<span class="title">'+user.slackUser.real_name+'</span>');
@@ -79,7 +79,6 @@ function displaySelectedDate(date) {
             }
             if (event.reasonPrefix && event.reason) {
                 $event.append(' ' + event.reasonPrefix + ' ' + event.reason);
-                $event.append('<br />');
             }
             $item.append($event);
         });
