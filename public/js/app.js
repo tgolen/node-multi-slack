@@ -8,8 +8,8 @@ var allUsers = [];
 function mixinDataForUser(user, data) {
     if (user.events && user.events.length) {
         for (var i = 0; i < user.events.length; i++) {
-            var start = moment(user.events[i].start);
-            var end = moment(user.events[i].end);
+            var start = moment.utc(user.events[i].start);
+            var end = moment.utc(user.events[i].end);
 
             // Add all of our start days
             if (!data[start.unix()]) {
@@ -26,7 +26,7 @@ function mixinDataForUser(user, data) {
                 // Make sure there is at least a full day between them
                 if (diffInMinutes > 1440) {
                     for (var j = 0; j < diffInDays; j++) {
-                        var recurringDay = moment(user.events[i].start).add(j + 2, 'day');
+                        var recurringDay = moment.utc(user.events[i].start).add(j + 2, 'day');
 
                         if (!data[recurringDay.unix()]) {
                             data[recurringDay.unix()] = 1;
