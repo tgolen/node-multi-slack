@@ -10,12 +10,13 @@ function mixinDataForUser(user, data) {
         for (var i = 0; i < user.events.length; i++) {
             var start = moment.utc(user.events[i].start);
             var end = moment.utc(user.events[i].end);
+            var tzOffset = user.slackUser.tz_offset || 0;
 
             // Add all of our start days
-            if (!data[start.unix()]) {
-                data[start.unix()] = 1;
+            if (!data[start.unix() - tzOffset]) {
+                data[start.unix() - tzOffset] = 1;
             } else {
-                data[start.unix()] += 1;
+                data[start.unix() - tzOffset] += 1;
             }
 
             // Add all the subsequent days
@@ -28,10 +29,10 @@ function mixinDataForUser(user, data) {
                     for (var j = 0; j < diffInDays; j++) {
                         var recurringDay = moment.utc(user.events[i].start).add(j + 2, 'day');
 
-                        if (!data[recurringDay.unix()]) {
-                            data[recurringDay.unix()] = 1;
+                        if (!data[recurringDay.unix() - tzOffset]) {
+                            data[recurringDay.unix() - tzOffset] = 1;
                         } else {
-                            data[recurringDay.unix()] += 1;
+                            data[recurringDay.unix() - tzOffset] += 1;
                         }
                     }
                 }
