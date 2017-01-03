@@ -105,7 +105,6 @@ $(function() {
 
     for (var i = 0; i < allUsers.length; i++) {
         mixinDataForUser(allUsers[i], data);
-        mixinDataForUser(allUsers[i], data);
     }
 
     // Initialize our calendar
