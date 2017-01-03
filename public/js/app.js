@@ -64,11 +64,11 @@ function displaySelectedDate(date) {
     var $resultCollection = $('<ul class="collection">');
 
     $.each(usersGone, function(userId, user) {
-        var $item = $('<li class="collection-item avatar">');
+        var $item = $('<li class="collection-item avatar">').empty();
         $item.append('<img src="'+user.slackUser.profile.image_72+'" alt="" class="circle">');
         $item.append('<span class="title">'+user.slackUser.real_name+'</span>');
         $.each(user.matchedEvents, function(i, event) {
-            var $event = $('<p>');
+            var $event = $('<p>').empty();
             var start = moment(event.start);
             var end = moment(event.end);
 
