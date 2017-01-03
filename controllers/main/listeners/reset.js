@@ -14,9 +14,15 @@ module.exports = function reset(bot, message) {
 
         convo.addMessage('I have forced myself to forget all your settings', channels.DEFAULT);
 
-        var newUser = {
-            id: message.user,
-        };
-        controller.storage.users.save(newUser, function() {});
+        controller.storage.users.get(message.user, function(err, user) {
+            if (err) {
+                console.error(err);
+            }
+            var newUser = {
+                id: message.user,
+                slackUser: user.slackUser,
+            };
+            controller.storage.users.save(newUser, function() {});
+        });
     });
 };

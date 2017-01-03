@@ -8,15 +8,14 @@ var allUsers = [];
 function mixinDataForUser(user, data) {
     if (user.events && user.events.length) {
         for (var i = 0; i < user.events.length; i++) {
-            var start = moment.utc(user.events[i].start);
-            var end = moment.utc(user.events[i].end);
-            var tzOffset = user.slackUser.tz_offset || 0;
+            var start = moment(user.events[i].start);
+            var end = moment(user.events[i].end);
 
             // Add all of our start days
-            if (!data[start.unix() - tzOffset]) {
-                data[start.unix() - tzOffset] = 1;
+            if (!data[start.unix()]) {
+                data[start.unix()] = 1;
             } else {
-                data[start.unix() - tzOffset] += 1;
+                data[start.unix()] += 1;
             }
 
             // Add all the subsequent days
@@ -27,12 +26,12 @@ function mixinDataForUser(user, data) {
                 // Make sure there is at least a full day between them
                 if (diffInMinutes > 1440) {
                     for (var j = 0; j < diffInDays; j++) {
-                        var recurringDay = moment.utc(user.events[i].start).add(j + 2, 'day');
+                        var recurringDay = moment(user.events[i].start).add(j + 2, 'day');
 
-                        if (!data[recurringDay.unix() - tzOffset]) {
-                            data[recurringDay.unix() - tzOffset] = 1;
+                        if (!data[recurringDay.unix()]) {
+                            data[recurringDay.unix()] = 1;
                         } else {
-                            data[recurringDay.unix() - tzOffset] += 1;
+                            data[recurringDay.unix()] += 1;
                         }
                     }
                 }
@@ -55,7 +54,7 @@ function displaySelectedDate(date) {
             // Loop through every event
             for (var j = 0; j < user.events.length; j++) {
                 var event = user.events[j];
-                if (moment(date).isBetween(moment.utc(event.start), moment.utc(event.end), 'day', '[]')) {
+                if (moment(date).isBetween(moment(event.start), moment(event.end), 'day', '[]')) {
                     if (!usersGone[user.id]) {
                         usersGone[user.id] = user;
                         usersGone[user.id].matchedEvents = [];
@@ -79,8 +78,8 @@ function displaySelectedDate(date) {
         }
         $.each(user.matchedEvents, function(i, event) {
             var $event = $('<p>');
-            var start = moment.utc(event.start);
-            var end = moment.utc(event.end);
+            var start = moment(event.start);
+            var end = moment(event.end);
 
             if (end.diff(start, 'days') > 0) {
                 $event.append(' All day');
