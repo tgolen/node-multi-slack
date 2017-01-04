@@ -42,6 +42,6 @@ module.exports = function greeting(convo, message) {
         }
 
         // Tell them their options
-        convo.addMessage('Commands that I respond to: `reset`, `list`, `view`, `add`, `remove`, `help`, `hi`', channels.DEFAULT);
+        convo.addMessage('Commands that I respond to: `reset`, `list`, `add`, `remove`, `help`, `hi`', channels.DEFAULT);
     });
 };
