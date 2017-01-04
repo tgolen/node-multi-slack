@@ -27,7 +27,7 @@ module.exports = function add(bot, message) {
              * Respond with a message about not being able to understand
              */
             function couldNotUnderstand() {
-                convo.addMessage('You can command me by saying `add <date-time> for <length of time> at|on <reason>`. For example:\n'
+                convo.addMessage('You can command me by saying `add <date-time> for <length of time> at|on|in <reason>`. For example:\n'
                     + '`add 2017-01-01 for 1 day on vacation`\n'
                     + '`add 2017-01-01 14:30 for 1 hour at DR. Appointment`\n'
                     + '`add 2017-01-01 on holiday`\n'
@@ -44,6 +44,8 @@ module.exports = function add(bot, message) {
                 reasonPrefix = 'at';
             } else if (datesToAdd.search(' on ') > -1) {
                 reasonPrefix = 'on';
+            } else if (datesToAdd.search(' in ') > -1) {
+                reasonPrefix = 'in';
             }
 
             if (reasonPrefix) {
@@ -69,7 +71,7 @@ module.exports = function add(bot, message) {
             }
 
             // Confirm to the user what we will be adding
-            var confirmationMessage = 'I will remember that you will be gone on ' + startDate.format('dddd, MMMM Do YYYY, h:mm:ss a');
+            var confirmationMessage = 'I will remember that you will be gone on ' + startDate.format('llll');
             if (startDate !== endDate) {
                 confirmationMessage += ' for ' + startDate.from(endDate, true);
             }
