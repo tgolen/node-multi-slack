@@ -1,15 +1,10 @@
 var express = require('express');
 var favicon = require('serve-favicon');
 var moment = require('moment');
-var mainController = require('./controllers/main');
+var titanController = require('./controllers/titan');
 var db = require('./lib/db');
 
-if (!process.env.SLACKBOT_TOKEN) {
-    console.log('Error: Specify token in environment');
-    process.exit(1);
-}
-
-mainController.start();
+titanController.start();
 
 db.connect(function(err, connection) {
     if (err) {

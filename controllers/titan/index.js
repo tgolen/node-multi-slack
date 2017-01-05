@@ -12,7 +12,7 @@ var bot;
  */
 exports.start = function start() {
     bot = controller.spawn({
-        token: process.env.SLACKBOT_TOKEN
+        token: process.env.SLACKBOT_TOKEN_TITAN
     }).startRTM();
 
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
