@@ -42,6 +42,6 @@ module.exports = function greeting(convo, message) {
         }
 
         // Tell them their options
-        convo.addMessage('Commands that I don\'t ignore: `help`, `reset`, `list`, `today`, `add`, `remove`, `hi`', channels.DEFAULT);
+        convo.addMessage('Commands that I don\'t ignore: `help`, `reset`, `list`, `today`, `view`, `add`, `remove`, `hi`', channels.DEFAULT);
     });
 };

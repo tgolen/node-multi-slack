@@ -19,6 +19,7 @@ module.exports = function greeting(convo, message) {
             // Tell them their options
             convo.addMessage('Commands that I respond to: `reset`, `list`, `view`, `add`, `remove`, `help`, `hi`', channels.SETUP);
             convo.addMessage('Why don\'t you start by adding a time when you\'re going to be gone? Example: `add 2017-01-01 for 1 day on vacation`. Enter `help` to see how to use all the commands.', channels.SETUP);
+            convo.addMessage('You can also see everyone who is gone today by saying `today`. Try it now, puny human!', channels.SETUP);
         }
     });
 

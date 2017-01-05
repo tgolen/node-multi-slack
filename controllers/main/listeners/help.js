@@ -20,6 +20,7 @@ module.exports = function reset(bot, message) {
 + 'See http://momentjs.com/docs/#/parsing/string/ for examples for date and time formats.\n\n'
 + '`list` - view all your events\n\n'
 + '`today` - see everyone who is gone today\n\n'
++ '`view 2017-01-07` - see everyone who is gone on a specific day\n\n'
 //+ 'You can *view* a graph of your events with `view`\n\n'
 + '`remove <event_id` - Remove and event (get the event ID from `list`)', channels.DEFAULT);
     });

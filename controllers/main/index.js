@@ -20,8 +20,9 @@ exports.start = function start() {
     controller.hears(['list'], 'direct_message,direct_mention,mention', require('./listeners/list'));
     controller.hears(['add (.*)'], 'direct_message,direct_mention,mention', require('./listeners/add'));
     controller.hears(['remove (.*)'], 'direct_message,direct_mention,mention', require('./listeners/remove'));
-    controller.hears(['help', 'add', 'remove'], 'direct_message,direct_mention,mention', require('./listeners/help'));
     controller.hears(['today'], 'direct_message,direct_mention,mention', require('./listeners/today'));
+    controller.hears(['view (.*)'], 'direct_message,direct_mention,mention', require('./listeners/date'));
+    controller.hears(['help', 'add', 'remove', 'view'], 'direct_message,direct_mention,mention', require('./listeners/help'));
     //controller.hears(['view'], 'direct_message,direct_mention,mention', require('./listeners/view'));
 
     return bot;

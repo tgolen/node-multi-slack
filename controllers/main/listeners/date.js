@@ -3,7 +3,7 @@ var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
- * Show everyone who is gone today
+ * Show all the people gone on a specific day
  * @param  {Object} bot
  * @param  {Object} message
  */
@@ -21,12 +21,17 @@ module.exports = function list(bot, message) {
             }
 
             if (!users || !users.length) {
-                convo.addMessage('No one has told me they will be gone today.', channels.DEFAULT);
+                convo.addMessage('No one has told me they will be gone on that day.', channels.DEFAULT);
                 return;
             }
 
-            var message = '';
-            var now = new Moment();
+            var reply = '';
+            var date = new Moment(message.match[1]);
+
+            if (!date.isValid()) {
+                convo.addMessage('No one could possibly understand a date like: ' + message.match[1] + '. I can only understand the YYYY-MM-DD format.', channels.DEFAULT);
+                return;
+            }
 
             // Loop through each user
             for (var i = 0; i < users.length; i++) {
@@ -43,18 +48,18 @@ module.exports = function list(bot, message) {
                     var start = new Moment(event.start);
                     var end = new Moment(event.end);
 
-                    if (now.isBetween(start, end, 'day', '[]')) {
-                        message += '*' + username + '*: ' + start.format('llll') + ' - ' + end.format('llll');
+                    if (date.isBetween(start, end, 'day', '[]')) {
+                        reply += '*' + username + '*: ' + start.format('llll') + ' - ' + end.format('llll');
                         if (event.reason && event.reasonPrefix) {
-                            message += ' _' + event.reasonPrefix + ' ' + event.reason + '_';
+                            reply += ' _' + event.reasonPrefix + ' ' + event.reason + '_';
                         }
-                        message += '\n';
+                        reply += '\n';
                     }
                 }
             }
 
-            if (message) {
-                convo.addMessage(message, channels.DEFAULT);
+            if (reply) {
+                convo.addMessage(reply, channels.DEFAULT);
                 return;
             }
 
