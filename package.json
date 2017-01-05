@@ -1,10 +1,10 @@
 {
-  "name": "titan-slack",
-  "version": "1.0.0",
-  "description": "A slack bot for working with calendar events",
+  "name": "node-multi-slack",
+  "version": "2.0.0",
+  "description": "A node application that runs multiple slack bots",
   "main": "index.js",
   "repository": {
-    "url": "https://github.com/tgolen/titan-slack.git",
+    "url": "https://github.com/tgolen/node-multi-slack.git",
     "type": "git"
   },
   "author": "Tim Golen <tgolen@gmail.com>",
@@ -12,12 +12,8 @@
   "dependencies": {
     "botkit": "^0.4.6",
     "botkit-storage-mongo": "1.0.4",
-    "express": "4.14.0",
     "moment": "2.17.1",
     "moment-timezone": "0.5.11",
-    "mongodb": "2.2.16",
-    "pug": "2.0.0-beta6",
-    "serve-favicon": "2.3.2"
   },
   "scripts": {
     "start": "nf start web"
