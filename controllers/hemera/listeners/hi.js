@@ -11,6 +11,7 @@ module.exports = function hi(bot, message) {
         convo.say('Hi! I am Hemera, the Greek goddess of the day.\n'
             + '> Nyx and Hemera draw near and greet one another as they pass the great threshold of bronze: and while the one is about to go down into the house, the other comes out at the door.\n'
             + 'I have been tasked with managing your 10 AM updates. Want to know how it works? Just say `help`.');
+        convo.stop();
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {

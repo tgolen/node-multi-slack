@@ -17,6 +17,7 @@ module.exports = function hi(bot, message) {
 
             if (!user) {
                 convo.say('I don\'t know you. Why don\'t you say "hi" and introduce yourself?');
+                convo.stop();
                 return;
             }
 
@@ -26,6 +27,7 @@ module.exports = function hi(bot, message) {
 
             if (!user.snooze.length) {
                 convo.say('Nice! You are not snoozing anyone. You value all of your co-worker\'s updates!');
+                convo.stop();
                 return;
             }
 
@@ -38,6 +40,7 @@ module.exports = function hi(bot, message) {
                 reply += '\nThat\'s a lot of people. Be sure to keep watching the #10am channel for their updates. If you want to start over at any time, just say "reset".'
             }
             convo.say(reply);
+            convo.stop();
         });
     });
 };

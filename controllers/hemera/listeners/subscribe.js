@@ -13,6 +13,7 @@ module.exports = function hi(bot, message) {
 
         if (targetUser.search('<@') === -1) {
             convo.say('When subscribing to someone, you need to add @ in front of their name.');
+            convo.stop();
             return;
         }
 
@@ -24,6 +25,7 @@ module.exports = function hi(bot, message) {
 
             if (!user) {
                 convo.say('I don\'t know you. Why don\'t you say "hi" and introduce yourself?');
+                convo.stop();
                 return;
             }
 
@@ -39,6 +41,7 @@ module.exports = function hi(bot, message) {
 
                 if (user.snooze.indexOf(res.user.name) === -1) {
                     convo.say('You are already subscribed to them');
+                    convo.stop();
                     return;
                 }
 
@@ -52,6 +55,7 @@ module.exports = function hi(bot, message) {
                 user.snooze = newSnoozeArray;
                 controller.storage.users.save(user, function() {
                     convo.say('I will start sending you updates from ' + res.user.name + ' again.');
+                    convo.stop();
                 });
             });
         });

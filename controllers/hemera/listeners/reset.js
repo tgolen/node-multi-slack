@@ -17,11 +17,13 @@ module.exports = function hi(bot, message) {
 
             if (!user) {
                 convo.say('I don\'t know you. Why don\'t you say "hi" and introduce yourself?');
+                convo.stop();
                 return;
             }
 
             if (!user.snooze || !user.snooze.length) {
                 convo.say('There is nothing for me to reset. You\'re already getting everyone\'s updates.');
+                convo.stop();
                 return;
             }
 
@@ -52,6 +54,7 @@ module.exports = function hi(bot, message) {
                     }
                 }
             ]);
+            convo.stop();
         });
     });
 };

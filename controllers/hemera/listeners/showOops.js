@@ -8,5 +8,6 @@ var hemera = require('../index');
 module.exports = function hi(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         convo.say('You need to show a specific person. Example: `show @person`');
+        convo.stop();
     });
 };
