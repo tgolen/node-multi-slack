@@ -87,12 +87,12 @@ module.exports = function (req, res) {
 
                                 var channelId = res.ok ? res.channel.id : null;
                                 if (channelId) {
+                                    var message = '*' + recipient.slackUser.name + '\'s* plan for the day is: \n'
+                                        + '>>> ' + req.body.text;
                                     bot.api.chat.postMessage({
                                         channel: channelId,
-                                        text: req.body.text,
-                                        as_user: false,
-                                        username: user.slackUser.name,
-                                        icon_url: user.slackUser.profile.image_72,
+                                        text: message,
+                                        as_user: true
                                     }, function(err) {
                                         if (err) {
                                             console.error(err);
