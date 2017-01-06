@@ -1,7 +1,7 @@
 var hemera = require('../index');
 
 /**
- * Snoozes updates for a specific person
+ * Stops snoozing a specific person
  * @param  {Object} bot
  * @param  {Object} message
  */
@@ -12,7 +12,7 @@ module.exports = function hi(bot, message) {
         var controller = hemera.getController();
 
         if (targetUser.search('<@') === -1) {
-            convo.say('When snoozing someone, you need to add @ in front of their name.');
+            convo.say('When subscribing to someone, you need to add @ in front of their name.');
             return;
         }
 
@@ -37,15 +37,21 @@ module.exports = function hi(bot, message) {
                     return console.error(err);
                 }
 
-                if (user.snooze.indexOf(res.user.name) > -1) {
-                    convo.say('You are already ignoring them.');
+                if (user.snooze.indexOf(res.user.name) === -1) {
+                    convo.say('You are already subscribed to them');
                     return;
                 }
 
                 // Save this user to their array of snoozed users
-                user.snooze.push(res.user.name);
+                var newSnoozeArray = [];
+                for (var i = 0; i < user.snooze.length; i++) {
+                    if (user.snooze[i] !== res.user.name) {
+                        newSnoozeArray.push(user.snooze[i]);
+                    }
+                }
+                user.snooze = newSnoozeArray;
                 controller.storage.users.save(user, function() {
-                    convo.say('I will no longer send you updates from ' + res.user.name + '.');
+                    convo.say('I will start sending you updates from ' + res.user.name + ' again.');
                 });
             });
         });
