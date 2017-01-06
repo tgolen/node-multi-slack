@@ -60,10 +60,18 @@ module.exports = function (req, res) {
                     }
 
                     if (users && users.length) {
-                        // @TODO Check to make sure the user posting this message hasn't been snoozed by them
-                        // @TODO Check to make sure we aren't sending a message to ourself
                         for (var i = 0; i < users.length; i++) {
                             var recipient = users[i];
+
+                            // Don't send a message to the user that's posting the update
+                            if (recipient.id === req.body.user_id) {
+                                continue;
+                            }
+
+                            // Don't send a message to this person if they snoozed the user posting the update
+                            if (recipient.snooze && recipient.snooze.length && recipient.snooze.indexOf(req.body.user_name) > -1) {
+                                continue;
+                            }
 
                             // Open an IM channel and post to it
                             bot.api.im.open({
