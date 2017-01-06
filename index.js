@@ -1,9 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-//var titanController = require('./controllers/titan').start();
-var hemeraController = require('./controllers/hemera').start();
-
+var titan = require('./controllers/titan');
+var hemera = require('./controllers/hemera');
 var db = require('./lib/db');
+
+var app = express();
 
 db.connect(function(err, connection) {
     if (err) {
@@ -11,7 +12,8 @@ db.connect(function(err, connection) {
     }
     console.log("Connected successfully to DB");
 
-    var app = express();
+    hemera.start();
+    titan.start();
 
     // parse application/x-www-form-urlencoded
     app.use(bodyParser.urlencoded({ extended: true }))

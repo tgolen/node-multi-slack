@@ -1,6 +1,11 @@
 var hemera = require('../controllers/hemera');
 var db = require('../lib/db').db();
 
+/**
+ * Handles the 10AM express route
+ * @param  {Express.Request} req
+ * @param  {Express.Response} res
+ */
 module.exports = function (req, res) {
     var bot = hemera.getBot();
     var controller = hemera.getController();
@@ -59,14 +64,39 @@ module.exports = function (req, res) {
                     controller.storage.users.all(function(err, users) {
                         if (err) {
                             console.error(err);
+                            return;
                         }
 
                         if (users && users.length) {
                             // @TODO Check to make sure the user posting this message hasn't been snoozed by them
+                            // @TODO Check to make sure we aren't sending a message to ourself
                             for (var i = 0; i < users.length; i++) {
                                 var recipient = users[i];
-                                bot.startPrivateConversation({user: recipient.id}, function(err, convo) {
-                                    convo.say(req.body.text);
+
+
+                                bot.api.im.open({
+                                    user: recipient.id
+                                }, function (err, res) {
+                                    if (err) {
+                                        console.error(err);
+                                        return;
+                                    }
+
+                                    var channelId = res.ok ? res.channel.id : null;
+                                    if (channelId) {
+                                        bot.api.chat.postMessage({
+                                            channel: channelId,
+                                            text: req.body.text,
+                                            as_user: false,
+                                            username: req.body.user_name,
+                                            icon_url: user.slackUser ? user.slackUser.profile.image_72 : '',
+                                        }, function(err) {
+                                            if (err) {
+                                                console.error(err);
+                                                return;
+                                            }
+                                        });
+                                    }
                                 });
                             }
                         }
