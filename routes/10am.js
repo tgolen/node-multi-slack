@@ -42,7 +42,7 @@ module.exports = function (req, res) {
                 text: req.body.text,
                 as_user: false,
                 username: user.slackUser.name,
-                icon_url: user.slackUser.profile || '',
+                icon_url: user.slackUser.profile.image_72,
             }, function(err) {
                 if (err) {
                     console.error(err);
@@ -66,11 +66,13 @@ module.exports = function (req, res) {
 
                             // Don't send a message to the user that's posting the update
                             if (recipient.id === user.id) {
-                                continue;
+                                console.log('[10am] Not posting a message to myself: %s', user.slackUser.name);
+                                //continue;
                             }
 
                             // Don't send a message to this person if they snoozed the user posting the update
                             if (recipient.snooze && recipient.snooze.length && recipient.snooze.indexOf(user.slackUser.name) > -1) {
+                                console.log('[10am] Not posting a message to %s because they are being snoozed by %s', user.slackUser.name, recipient.slackUser.name);
                                 continue;
                             }
 
