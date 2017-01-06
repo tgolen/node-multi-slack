@@ -1,3 +1,6 @@
+var hemera = require('../index');
+var controller = hemera.getController();
+
 /**
  * Reponds with a private message when someone says "hi"
  * @param  {Object} bot
