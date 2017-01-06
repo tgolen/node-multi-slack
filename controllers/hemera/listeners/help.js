@@ -16,6 +16,5 @@ module.exports = function hi(bot, message) {
             + '`reset` - I will reset your list of people you are snoozing\n'
             + '`/10am <update>` - I will use this as your update for today. You can use this slash command from any channel.\n\n'
             + 'Go ahead and try posting an update now with `/10am`');
-        convo.stop();
     });
 };

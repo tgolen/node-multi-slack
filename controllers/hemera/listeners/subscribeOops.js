@@ -8,6 +8,5 @@ var hemera = require('../index');
 module.exports = function hi(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         convo.say('You need to subscribe to a specific person. Example: `subscribe @person`');
-        convo.stop();
     });
 };

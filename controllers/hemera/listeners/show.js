@@ -13,7 +13,6 @@ module.exports = function hi(bot, message) {
 
         if (targetUser.search('<@') === -1) {
             convo.say('When looking at someone, you need to add @ in front of their name.');
-            convo.stop();
             return;
         }
 
@@ -25,7 +24,6 @@ module.exports = function hi(bot, message) {
 
             if (!user) {
                 convo.say('I don\'t know you. Why don\'t you say "hi" and introduce yourself?');
-                convo.stop();
                 return;
             }
 
@@ -37,14 +35,12 @@ module.exports = function hi(bot, message) {
 
                 if (!userToView || !userToView.lastUpdate) {
                     convo.say('They haven\'t posted any updates yet.');
-                    convo.stop();
                     return;
                 }
 
                 var dateOfLastUpdate = new moment(userToView.lastUpdate_at);
                 convo.say(userToView.slackUser.name + '\'s last update was '+dateOfLastUpdate.calendar()+': \n'
                     + '>>> ' + userToView.lastUpdate);
-                convo.stop();
             });
         });
     });

@@ -13,7 +13,6 @@ module.exports = function hi(bot, message) {
 
         if (targetUser.search('<@') === -1) {
             convo.say('When snoozing someone, you need to add @ in front of their name.');
-            convo.stop();
             return;
         }
 
@@ -25,7 +24,6 @@ module.exports = function hi(bot, message) {
 
             if (!user) {
                 convo.say('I don\'t know you. Why don\'t you say "hi" and introduce yourself?');
-                convo.stop();
                 return;
             }
 
@@ -41,13 +39,11 @@ module.exports = function hi(bot, message) {
 
                 if (user.snooze.indexOf(res.user.name) > -1) {
                     convo.say('I would snooze them for you, but you are already ignoring them.');
-                    convo.stop();
                     return;
                 }
 
                 if (user.slackUser.name === res.user.name) {
                     convo.say('You don\'t want to hear your own updates? That\'s silly.');
-                    convo.stop();
                     return;
                 }
 
@@ -55,7 +51,6 @@ module.exports = function hi(bot, message) {
                 user.snooze.push(res.user.name);
                 controller.storage.users.save(user, function() {
                     convo.say('OK, I will no longer send you updates from ' + res.user.name + '.');
-                    convo.stop();
                 });
             });
         });
