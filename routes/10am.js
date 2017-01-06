@@ -10,8 +10,6 @@ module.exports = function (req, res) {
     var bot = hemera.getBot();
     var controller = hemera.getController();
 
-    console.log(req);
-
     if (req.body.token !== process.env.SLASHCOMMAND_10AM_TOKEN) {
         return res.status(403).send();
     }

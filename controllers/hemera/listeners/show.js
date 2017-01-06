@@ -43,7 +43,7 @@ module.exports = function hi(bot, message) {
 
                 var dateOfLastUpdate = new moment(userToView.lastUpdate_at);
                 convo.say(userToView.slackUser.name + '\'s last update was '+dateOfLastUpdate.calendar()+': \n'
-                    + '> ' + userToView.lastUpdate);
+                    + '>>> ' + userToView.lastUpdate);
                 convo.stop();
             });
         });
