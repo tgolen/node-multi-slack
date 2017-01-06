@@ -1,8 +1,5 @@
 var Botkit = require('botkit');
-var controller = Botkit.slackbot({
-    debug: process.env.NODE_ENV !== 'production',
-    storage: require('botkit-storage-mongo')({mongoUri: process.env.DATABASE_URL})
-});
+var controller;
 var bot;
 
 /**
@@ -11,6 +8,11 @@ var bot;
  * @returns {Object} the created slackbot
  */
 exports.start = function start() {
+    controller = Botkit.slackbot({
+        debug: process.env.NODE_ENV !== 'production',
+        storage: require('botkit-storage-mongo')({mongoUri: process.env.DATABASE_URL})
+    });
+
     bot = controller.spawn({
         token: process.env.SLACKBOT_TOKEN_HEMERA
     }).startRTM();

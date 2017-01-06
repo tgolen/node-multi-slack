@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 //var titanController = require('./controllers/titan').start();
-//var hemeraController = require('./controllers/hemera').start();
+var hemeraController = require('./controllers/hemera').start();
 
 var db = require('./lib/db');
 
