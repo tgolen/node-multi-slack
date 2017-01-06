@@ -14,6 +14,7 @@ module.exports = function hi(bot, message) {
             + '`list` - I will show you everyone that you are snoozing\n'
             + '`show @person` - I will show you that person\'s update for today\n'
             + '`reset` - I will reset your list of people you are snoozing\n'
-            + '`/10am <update>` - I will use this as your update for today. You can use this slash command from any channel.');
+            + '`/10am <update>` - I will use this as your update for today. You can use this slash command from any channel.\n\n'
+            + 'Go ahead and try posting an update now with `/10am`');
     });
 };
