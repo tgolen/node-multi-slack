@@ -14,13 +14,14 @@ module.exports = function (req, res) {
         return res.status(403).send();
     }
 
+    // Get the user object that is making the request
     controller.storage.users.get(req.body.user_id, function(err, user) {
         if (err) {
             res.send('Ooops, there was an error. How embarassing. ' + err.toString());
             console.error(err);
         }
 
-        if (!user) {
+        if (!user || !user.slackUser) {
             res.send('I don\'t know you yet. Why don\'t you say "@hemera hi" and introduce yourself.');
             return;
         }
@@ -40,8 +41,8 @@ module.exports = function (req, res) {
                 channel: '10amtest',
                 text: req.body.text,
                 as_user: false,
-                username: req.body.user_name,
-                icon_url: user.slackUser ? user.slackUser.profile.image_72 : '',
+                username: user.slackUser.name,
+                icon_url: user.slackUser.profile || '',
             }, function(err) {
                 if (err) {
                     console.error(err);
@@ -64,12 +65,12 @@ module.exports = function (req, res) {
                             var recipient = users[i];
 
                             // Don't send a message to the user that's posting the update
-                            if (recipient.id === req.body.user_id) {
+                            if (recipient.id === user.id) {
                                 continue;
                             }
 
                             // Don't send a message to this person if they snoozed the user posting the update
-                            if (recipient.snooze && recipient.snooze.length && recipient.snooze.indexOf(req.body.user_name) > -1) {
+                            if (recipient.snooze && recipient.snooze.length && recipient.snooze.indexOf(user.slackUser.name) > -1) {
                                 continue;
                             }
 
@@ -88,12 +89,11 @@ module.exports = function (req, res) {
                                         channel: channelId,
                                         text: req.body.text,
                                         as_user: false,
-                                        username: req.body.user_name,
-                                        icon_url: user.slackUser ? user.slackUser.profile.image_72 : '',
+                                        username: user.slackUser.name,
+                                        icon_url: user.slackUser.profile.image_72,
                                     }, function(err) {
                                         if (err) {
                                             console.error(err);
-                                            return;
                                         }
                                     });
                                 }
