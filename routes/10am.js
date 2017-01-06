@@ -38,7 +38,7 @@ module.exports = function (req, res) {
 
             // Send their update to our main 10AM channel
             bot.api.chat.postMessage({
-                channel: '10amtest',
+                channel: '10am',
                 text: req.body.text,
                 as_user: false,
                 username: user.slackUser.name,
