@@ -1,4 +1,5 @@
 var Botkit = require('botkit');
+var nag = require('./nag');
 var controller;
 var bot;
 
@@ -27,6 +28,9 @@ exports.start = function start() {
     controller.hears(['show (.*)'], 'direct_message,direct_mention,mention', require('./listeners/show'));
     controller.hears(['show'], 'direct_message,direct_mention,mention', require('./listeners/showOops'));
     controller.hears(['reset'], 'direct_message,direct_mention,mention', require('./listeners/reset'));
+
+    // Nag people about posting updates every hour
+    setInterval(nag, 1000 * 60 * 60);
 
     return bot;
 };

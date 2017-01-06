@@ -1,5 +1,4 @@
 var hemera = require('../controllers/hemera');
-var db = require('../lib/db').db();
 
 /**
  * Handles the 10AM express route
