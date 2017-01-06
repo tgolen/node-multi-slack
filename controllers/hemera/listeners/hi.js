@@ -1,5 +1,4 @@
 var hemera = require('../index');
-var controller = hemera.getController();
 
 /**
  * Reponds with a private message when someone says "hi"
@@ -7,6 +6,7 @@ var controller = hemera.getController();
  * @param  {Object} message
  */
 module.exports = function hi(bot, message) {
+    var controller = hemera.getController();
     bot.startPrivateConversation(message, function(err, convo) {
         convo.say('Hi! I am Hemera, the Greek goddess of the day.\n'
             + '> Nyx and Hemera draw near and greet one another as they pass the great threshold of bronze: and while the one is about to go down into the house, the other comes out at the door.\n'
@@ -15,6 +15,7 @@ module.exports = function hi(bot, message) {
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
                 console.error(err);
+                return;
             }
 
             if (!user) {

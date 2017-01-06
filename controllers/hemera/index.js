@@ -19,6 +19,8 @@ exports.start = function start() {
 
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
     controller.hears(['help'], 'direct_message,direct_mention,mention', require('./listeners/help'));
+    controller.hears(['snooze (.*)'], 'direct_message,direct_mention,mention', require('./listeners/snooze'));
+    controller.hears(['snooze'], 'direct_message,direct_mention,mention', require('./listeners/snoozeOops'));
 
     return bot;
 };
