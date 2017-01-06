@@ -23,6 +23,7 @@ exports.start = function start() {
     controller.hears(['snooze'], 'direct_message,direct_mention,mention', require('./listeners/snoozeOops'));
     controller.hears(['subscribe (.*)'], 'direct_message,direct_mention,mention', require('./listeners/subscribe'));
     controller.hears(['subscribe'], 'direct_message,direct_mention,mention', require('./listeners/subscribeOops'));
+    controller.hears(['list'], 'direct_message,direct_mention,mention', require('./listeners/list'));
 
     return bot;
 };
