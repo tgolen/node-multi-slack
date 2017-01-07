@@ -86,8 +86,8 @@ module.exports = function add(bot, message) {
                 user.events = [];
             }
             user.events.push({
-                start: startDate.valueOf(),
-                end: endDate.valueOf(),
+                start: startDate.toDate(),
+                end: endDate.toDate(),
                 reason: reason,
                 reasonPrefix: reasonPrefix,
             });

@@ -3,7 +3,7 @@ var tz = require('moment-timezone');
 var controller = require('../index').getController();
 
 /**
- * Show everyone who is gone today
+ * Show everyone who is gone right now
  * @param  {Object} bot
  * @param  {Object} message
  */
@@ -32,7 +32,7 @@ module.exports = function list(bot, message) {
                 }
 
                 if (!users || !users.length) {
-                    convo.addMessage('No one has told me they will be gone today.', 'default');
+                    convo.addMessage('No one has told me they will be gone right now.', 'default');
                     return;
                 }
 
@@ -53,7 +53,7 @@ module.exports = function list(bot, message) {
                         var start = moment(event.start).tz(user.slackUser.tz);
                         var end = moment(event.end).tz(user.slackUser.tz);
 
-                        if (now.isBetween(start, end, 'day', '[]')) {
+                        if (now.isBetween(start, end, 'minute', '[]')) {
                             message += '*' + username + '*: ' + start.format('llll') + ' - ' + end.format('llll');
                             if (event.reason && event.reasonPrefix) {
                                 message += ' _' + event.reasonPrefix + ' ' + event.reason + '_';
@@ -68,7 +68,7 @@ module.exports = function list(bot, message) {
                     return;
                 }
 
-                convo.addMessage('No one has told me they will be gone today.', 'default');
+                convo.addMessage('No one has told me they will be gone right now.', 'default');
             });
         });
     });
