@@ -19,7 +19,7 @@ exports.start = function start() {
     }).startRTM();
 
     // Keep their slack profile up to date for every message
-    controller.on('message_received', require('./updateSlackProfile'));
+    controller.on('message_received', require('../utils/updateSlackProfile'));
 
     // Setup our message listeners
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
@@ -34,8 +34,9 @@ exports.start = function start() {
     controller.hears(['reset'], 'direct_message,direct_mention,mention', require('./listeners/reset'));
 
     // Nag people about posting updates every hour
-    setInterval(nag, 1000 * 60 * 60);
     nag();
+    setInterval(nag, 1000 * 5);
+    //setInterval(nag, 1000 * 60 * 60);
 
     return bot;
 };
