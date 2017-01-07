@@ -7,7 +7,7 @@ var controller;
  * @param  {Object} message
  */
 module.exports = function updateSlackProfile(bot, message) {
-    controller = hemerga.getController();
+    controller = hemera.getController();
     controller.storage.users.get(message.user, function(err, user) {
         if (err) {
             return console.error(err);
@@ -16,6 +16,12 @@ module.exports = function updateSlackProfile(bot, message) {
         bot.api.users.info({user: message.user}, function(err, res) {
             if (err) {
                 return console.error(err);
+            }
+
+            if (!user) {
+                user = {
+                    id: message.user,
+                };
             }
 
             user.slackUser = res.user;
