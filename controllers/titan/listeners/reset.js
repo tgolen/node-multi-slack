@@ -1,4 +1,3 @@
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -12,7 +11,7 @@ module.exports = function reset(bot, message) {
             return console.error(err);
         }
 
-        convo.addMessage('I have forced myself to forget all your settings', channels.DEFAULT);
+        convo.addMessage('I have forced myself to forget all your settings', 'default');
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {

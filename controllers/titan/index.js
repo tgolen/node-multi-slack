@@ -15,6 +15,9 @@ exports.start = function start() {
         token: process.env.SLACKBOT_TOKEN_TITAN
     }).startRTM();
 
+    // Keep their slack profile up to date for every message
+    controller.on('message_received', require('../utils/updateSlackProfile'));
+
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
     controller.hears(['reset'], 'direct_message,direct_mention,mention', require('./listeners/reset'));
     controller.hears(['list'], 'direct_message,direct_mention,mention', require('./listeners/list'));

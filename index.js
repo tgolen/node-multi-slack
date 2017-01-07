@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var titan = require('./controllers/titan');
 var hemera = require('./controllers/hemera');
+var slashcommand = require('./controllers/slashcommand');
 var db = require('./lib/db');
 
 var app = express();
@@ -14,8 +15,9 @@ db.connect(function(err, connection) {
 
     hemera.start();
     titan.start();
+    slashcommand.start();
 
-    // parse application/x-www-form-urlencoded
+    /*/ parse application/x-www-form-urlencoded
     app.use(bodyParser.urlencoded({ extended: true }))
 
     // parse application/json
@@ -26,5 +28,5 @@ db.connect(function(err, connection) {
 
     app.listen(process.env.PORT || 3000, function () {
         console.log('App listening on port ' + (process.env.PORT || 3000) + '!');
-    });
+    });*/
 });

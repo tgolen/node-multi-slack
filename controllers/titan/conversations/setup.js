@@ -1,4 +1,3 @@
-var channels = require('../channels');
 var controller = require('../index').getController();
 var bot = require('../index').getBot();
 
@@ -13,13 +12,13 @@ module.exports = function greeting(convo, message) {
         }
 
         if (!user) {
-            convo.addMessage('I am Titan. I am clever at observing the seasons of the year and times when the sun increases and ripens seeds and fruits.', channels.SETUP);
-            convo.addMessage('This makes me especially good at remembering when you will be out of the office.', channels.SETUP);
+            convo.addMessage('I am Titan. I am clever at observing the seasons of the year and times when the sun increases and ripens seeds and fruits.', 'setup');
+            convo.addMessage('This makes me especially good at remembering when you will be out of the office.', 'setup');
 
             // Tell them their options
-            convo.addMessage('Commands that I respond to: `reset`, `list`, `view`, `add`, `remove`, `help`, `hi`', channels.SETUP);
-            convo.addMessage('Why don\'t you start by adding a time when you\'re going to be gone? Example: `add 2017-01-01 for 1 day on vacation`. Enter `help` to see how to use all the commands.', channels.SETUP);
-            convo.addMessage('You can also see everyone who is gone today by saying `today`. Try it now, puny human!', channels.SETUP);
+            convo.addMessage('Commands that I respond to: `reset`, `list`, `view`, `add`, `remove`, `help`, `hi`', 'setup');
+            convo.addMessage('Why don\'t you start by adding a time when you\'re going to be gone? Example: `add 2017-01-01 for 1 day on vacation`. Enter `help` to see how to use all the commands.', 'setup');
+            convo.addMessage('You can also see everyone who is gone today by saying `today`. Try it now, puny human!', 'setup');
         }
     });
 

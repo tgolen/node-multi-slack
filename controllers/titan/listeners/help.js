@@ -1,4 +1,3 @@
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -23,6 +22,6 @@ module.exports = function reset(bot, message) {
 + '`today` - see everyone who is gone today\n\n'
 + '`view 2017-01-07` - see everyone who is gone on a specific day\n\n'
 //+ 'You can *view* a graph of your events with `view`\n\n'
-+ '`remove <event_id>` - Remove and event (get the event ID from `list`)', channels.DEFAULT);
++ '`remove <event_id>` - Remove and event (get the event ID from `list`)', 'default');
     });
 };

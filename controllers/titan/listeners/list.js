@@ -1,5 +1,4 @@
 var Moment = require('moment');
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -13,7 +12,7 @@ module.exports = function list(bot, message) {
             return console.error(err);
         }
 
-        convo.addMessage('This is when you will be out of the office:', channels.DEFAULT);
+        convo.addMessage('This is when you will be out of the office:', 'default');
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
@@ -21,12 +20,12 @@ module.exports = function list(bot, message) {
             }
 
             if (!user) {
-                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself.');
+                convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');
                 return;
             }
 
             if (!user.events || !user.events.length) {
-                convo.addMessage('You have not set up any out of the office times.', channels.DEFAULT);
+                convo.addMessage('You have not set up any out of the office times.', 'default');
                 return;
             } else {
                 var message = '';
@@ -39,7 +38,7 @@ module.exports = function list(bot, message) {
                     }
                     message += '\n';
                 }
-                convo.addMessage(message, channels.DEFAULT);
+                convo.addMessage(message, 'default');
             }
         });
     });

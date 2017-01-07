@@ -1,5 +1,4 @@
 var Moment = require('moment');
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -13,7 +12,7 @@ module.exports = function list(bot, message) {
             return console.error(err);
         }
 
-        convo.addMessage('Let me consult the oracle...', channels.DEFAULT);
+        convo.addMessage('Let me consult the oracle...', 'default');
 
         controller.storage.users.all(function(err, users) {
             if (err) {
@@ -21,7 +20,7 @@ module.exports = function list(bot, message) {
             }
 
             if (!users || !users.length) {
-                convo.addMessage('No one has told me they will be gone on that day.', channels.DEFAULT);
+                convo.addMessage('No one has told me they will be gone on that day.', 'default');
                 return;
             }
 
@@ -29,7 +28,7 @@ module.exports = function list(bot, message) {
             var date = new Moment(message.match[1]);
 
             if (!date.isValid()) {
-                convo.addMessage('No one could possibly understand a date like: ' + message.match[1] + '. I can only understand the YYYY-MM-DD format.', channels.DEFAULT);
+                convo.addMessage('No one could possibly understand a date like: ' + message.match[1] + '. I can only understand the YYYY-MM-DD format.', 'default');
                 return;
             }
 
@@ -59,11 +58,11 @@ module.exports = function list(bot, message) {
             }
 
             if (reply) {
-                convo.addMessage(reply, channels.DEFAULT);
+                convo.addMessage(reply, 'default');
                 return;
             }
 
-            convo.addMessage('No one has told me they will be gone today.', channels.DEFAULT);
+            convo.addMessage('No one has told me they will be gone today.', 'default');
         });
     });
 };

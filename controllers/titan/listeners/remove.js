@@ -1,5 +1,4 @@
 var Moment = require('moment');
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -19,11 +18,11 @@ module.exports = function add(bot, message) {
                 console.error(err);
             }
             if (!user) {
-                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself.');
+                convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');
                 return;
             }
             if (!user.events || !user.events.length) {
-                convo.addMessage('You have not added any events. Try adding one first.', channels.DEFAULT);
+                convo.addMessage('You have not added any events. Try adding one first.', 'default');
                 return;
             }
 
@@ -31,7 +30,7 @@ module.exports = function add(bot, message) {
             var eventID = new Number(message.match[1]);
 
             if (!user.events[eventID]) {
-                return convo.addMessage('I could not find the event with ID `' + message.match[1] + '`. Try using an event ID from `list`.', channels.DEFAULT);
+                return convo.addMessage('I could not find the event with ID `' + message.match[1] + '`. Try using an event ID from `list`.', 'default');
             }
 
             // Store this event in the user object
@@ -43,7 +42,7 @@ module.exports = function add(bot, message) {
             }
             user.events = newEvents;
             controller.storage.users.save(user, function() {});
-            convo.addMessage('I have removed that event.', channels.DEFAULT);
+            convo.addMessage('I have removed that event.', 'default');
         });
     });
 };

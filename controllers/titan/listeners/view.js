@@ -19,7 +19,7 @@ module.exports = function list(bot, message) {
             }
 
             if (!user) {
-                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself.');
+                convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');
                 return;
             }
 
@@ -28,7 +28,7 @@ module.exports = function list(bot, message) {
                 : 'http://' + process.env.HOST + ':' + process.env.PORT;
             url += '/' + user.id + '/events';
 
-            convo.addMessage('Direct your gaze towards ' + url, channels.DEFAULT);
+            convo.addMessage('Direct your gaze towards ' + url, 'default');
         });
     });
 };

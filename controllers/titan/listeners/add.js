@@ -1,5 +1,4 @@
 var Moment = require('moment');
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -19,7 +18,7 @@ module.exports = function add(bot, message) {
                 console.error(err);
             }
             if (!user) {
-                convo.transitionTo(channels.SETUP, 'I don\'t know you, let me introduce myself.');
+                convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');
                 return;
             }
 
@@ -32,7 +31,7 @@ module.exports = function add(bot, message) {
                     + '`add 2017-01-01 14:30 for 1 hour at DR. Appointment`\n'
                     + '`add 2017-01-01 on holiday`\n'
                     + '`add 2017-01-01`\n'
-                    + 'See http://momentjs.com/docs/#/parsing/string/ for examples for date and time formats.', channels.DEFAULT);
+                    + 'See http://momentjs.com/docs/#/parsing/string/ for examples for date and time formats.', 'default');
             }
 
             // Parse our dates and reasons
@@ -66,7 +65,7 @@ module.exports = function add(bot, message) {
 
             // Validate our options
             if (!startDate.isValid()) {
-                convo.addMessage('I could not understand "' + datesToAdd + '".', channels.DEFAULT);
+                convo.addMessage('I could not understand "' + datesToAdd + '".', 'default');
                 return couldNotUnderstand();
             }
 
@@ -79,7 +78,7 @@ module.exports = function add(bot, message) {
                 confirmationMessage += ' because you will be ' + reasonPrefix + ' ' + reason;
             }
 
-            convo.addMessage(confirmationMessage, channels.DEFAULT);
+            convo.addMessage(confirmationMessage, 'default');
 
             // Store this event in the user object
             if (!user.events) {

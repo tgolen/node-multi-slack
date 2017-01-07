@@ -1,5 +1,4 @@
 var Moment = require('moment');
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**
@@ -13,7 +12,7 @@ module.exports = function list(bot, message) {
             return console.error(err);
         }
 
-        convo.addMessage('Let me consult the oracle...', channels.DEFAULT);
+        convo.addMessage('Let me consult the oracle...', 'default');
 
         controller.storage.users.all(function(err, users) {
             if (err) {
@@ -21,7 +20,7 @@ module.exports = function list(bot, message) {
             }
 
             if (!users || !users.length) {
-                convo.addMessage('No one has told me they will be gone today.', channels.DEFAULT);
+                convo.addMessage('No one has told me they will be gone today.', 'default');
                 return;
             }
 
@@ -54,11 +53,11 @@ module.exports = function list(bot, message) {
             }
 
             if (message) {
-                convo.addMessage(message, channels.DEFAULT);
+                convo.addMessage(message, 'default');
                 return;
             }
 
-            convo.addMessage('No one has told me they will be gone today.', channels.DEFAULT);
+            convo.addMessage('No one has told me they will be gone today.', 'default');
         });
     });
 };
