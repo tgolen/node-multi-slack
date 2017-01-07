@@ -19,19 +19,10 @@ exports.start = function start() {
         }
 
         // Add multiple slash command tokens to this array
-        controller.createWebhookEndpoints(express_webserver, [process.env.SLASHCOMMAND_10AM_TOKEN, process.env.SLACKBOT_TOKEN_HEMERA]);
+        controller.createWebhookEndpoints(express_webserver, [process.env.SLASHCOMMAND_10AM_TOKEN]);
 
         // Need to abstract this a little once it handles more slash commands
         controller.on('slash_command', require('./10am'));
-    });
-
-    controller.spawn({
-        token: process.env.SLACKBOT_TOKEN_HEMERA
-    }).startRTM(function(err, connectedBot) {
-        if (err) {
-            return console.error(err);
-        }
-        bot = connectedBot;
     });
 };
 
