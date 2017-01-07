@@ -30,7 +30,7 @@ exports.start = function start() {
     controller.hears(['help', 'add', 'remove', 'view'], 'direct_message,direct_mention,mention', require('./listeners/help'));
 
     controller.spawn({
-        token: process.env.SLACKBOT_TOKEN_HEMERA
+        token: process.env.SLACKBOT_TOKEN_TITAN
     }).startRTM(function(err, connectedBot) {
         if (err) {
             return console.error(err);
