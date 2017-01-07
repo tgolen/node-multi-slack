@@ -14,12 +14,12 @@ module.exports = function (bot, message) {
     // Get the user object that is making the request
     controller.storage.users.get(message.user, function(err, user) {
         if (err) {
-            bot.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
+            botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
             console.error(err);
         }
 
         if (!user || !user.slackUser) {
-            bot.replyPrivate('I don\'t know you yet. Why don\'t you say "@hemera hi" and introduce yourself.');
+            botHemera.replyPrivate('I don\'t know you yet. Why don\'t you say "@hemera hi" and introduce yourself.');
             return;
         }
 
@@ -29,7 +29,7 @@ module.exports = function (bot, message) {
         controller.storage.users.save(user, function(err) {
             if (err) {
                 console.error(err);
-                bot.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
+                botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
                 return;
             }
 
@@ -43,12 +43,12 @@ module.exports = function (bot, message) {
             }, function(err) {
                 if (err) {
                     console.error(err);
-                    bot.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
+                    botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
                     return;
                 }
 
                 // Respond to the API at this point so the rest is done after the request
-                bot.replyPrivate('OK, I will post your update!');
+                botHemera.replyPrivate('OK, I will post your update!');
 
                 // Now send a PM to each of our users with that update
                 controller.storage.users.all(function(err, users) {
