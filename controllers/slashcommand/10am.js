@@ -33,6 +33,7 @@ module.exports = function (bot, message) {
 
             // Send their update to our main 10AM channel
             bot.api.chat.postMessage({
+                token: process.env.SLASHCOMMAND_10AM_TOKEN,
                 channel: '10am',
                 text: message.text,
                 as_user: false,
@@ -73,6 +74,7 @@ module.exports = function (bot, message) {
 
                             // Open an IM channel and post to it
                             bot.api.im.open({
+                                token: process.env.SLASHCOMMAND_10AM_TOKEN,
                                 user: recipient.id
                             }, function (err, res) {
                                 if (err) {
@@ -85,6 +87,7 @@ module.exports = function (bot, message) {
                                     var message = '*' + recipient.slackUser.name + '\'s* plan for the day is: \n'
                                         + '>>> ' + message.text;
                                     bot.api.chat.postMessage({
+                                        token: process.env.SLASHCOMMAND_10AM_TOKEN,
                                         channel: channelId,
                                         text: message,
                                         as_user: true
