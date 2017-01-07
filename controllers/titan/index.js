@@ -14,10 +14,6 @@ exports.start = function start() {
         storage: require('botkit-storage-mongo')({mongoUri: process.env.DATABASE_URL})
     });
 
-    bot = controller.spawn({
-        token: process.env.SLACKBOT_TOKEN_TITAN
-    }).startRTM();
-
     // Keep their slack profile up to date for every message
     controller.on('message_received', function(bot, message) {
         updateSlackProfile(bot, message, controller);
@@ -32,7 +28,15 @@ exports.start = function start() {
     controller.hears(['now'], 'direct_message,direct_mention,mention', require('./listeners/now'));
     controller.hears(['view (.*)'], 'direct_message,direct_mention,mention', require('./listeners/date'));
     controller.hears(['help', 'add', 'remove', 'view'], 'direct_message,direct_mention,mention', require('./listeners/help'));
-    //controller.hears(['view'], 'direct_message,direct_mention,mention', require('./listeners/view'));
+
+    controller.spawn({
+        token: process.env.SLACKBOT_TOKEN_HEMERA
+    }).startRTM(function(err, connectedBot) {
+        if (err) {
+            return console.error(err);
+        }
+        bot = connectedBot;
+    });
 
     return bot;
 };
