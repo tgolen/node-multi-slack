@@ -18,6 +18,10 @@ exports.start = function start() {
         token: process.env.SLACKBOT_TOKEN_HEMERA
     }).startRTM();
 
+    // Keep their slack profile up to date for every message
+    controller.on('message_received', require('./updateSlackProfile'));
+
+    // Setup our message listeners
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
     controller.hears(['help'], 'direct_message,direct_mention,mention', require('./listeners/help'));
     controller.hears(['snooze (.*)'], 'direct_message,direct_mention,mention', require('./listeners/snooze'));
@@ -31,6 +35,7 @@ exports.start = function start() {
 
     // Nag people about posting updates every hour
     setInterval(nag, 1000 * 60 * 60);
+    nag();
 
     return bot;
 };

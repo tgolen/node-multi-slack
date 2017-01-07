@@ -51,7 +51,7 @@ module.exports = function nag() {
             var lastUpdatedTime = user.lastUpdated_at ? moment(lastUpdated_at).tz(user.slackUser.tz) : null;
             var timeLastNagged = user.lastNag_at ? moment(user.lastNag_at).tz(user.slackUser.tz) : null;
             var daysSinceLastUpdated = lastUpdatedTime ? usersNow.diff(lastUpdatedTime, 'days') : null;
-            var daysSinceNagged = timeLastNagged && usersNow.diff(timeLastNagged, 'days') : null;
+            var daysSinceNagged = timeLastNagged ? usersNow.diff(timeLastNagged, 'days') : null;
 
             console.log('[HEMERA] COMMENCE NAGGING ------', user.slackUser.name);
             !lastUpdatedTime && console.log('[HEMERA] user has never sent an update');
