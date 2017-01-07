@@ -65,13 +65,13 @@ module.exports = function (req, res) {
 
                             // Don't send a message to the user that's posting the update
                             if (recipient.id === user.id) {
-                                console.log('[10am] Not posting a message to myself: %s', user.slackUser.name);
+                                console.log('[HEMERA] Not posting a message to myself: %s', user.slackUser.name);
                                 //continue;
                             }
 
                             // Don't send a message to this person if they snoozed the user posting the update
                             if (recipient.snooze && recipient.snooze.length && recipient.snooze.indexOf(user.slackUser.name) > -1) {
-                                console.log('[10am] Not posting a message to %s because they are being snoozed by %s', user.slackUser.name, recipient.slackUser.name);
+                                console.log('[HEMERA] Not posting a message to %s because they are being snoozed by %s', user.slackUser.name, recipient.slackUser.name);
                                 continue;
                             }
 
