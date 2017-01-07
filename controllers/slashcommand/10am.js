@@ -34,12 +34,12 @@ module.exports = function (bot, message) {
             }
 
             // Send their update to our main 10AM channel
+            var publicUpdate = '*' + user.slackUser.name + '\'s* plan for the day is: \n'
+                + '>>> ' + message.text;
             botHemera.api.chat.postMessage({
-                channel: '10am',
-                text: message.text,
-                as_user: false,
-                username: user.slackUser.name,
-                icon_url: user.slackUser.profile.image_72,
+                channel: process.env.NODE_ENV === 'production' ? '10am' : '10amtest',
+                text: publicUpdate,
+                as_user: true
             }, function(err) {
                 if (err) {
                     console.error(err);
@@ -75,7 +75,7 @@ module.exports = function (bot, message) {
 
                             // Open an IM channel and post to it
                             botHemera.api.im.open({
-                                user: recipient.id
+                                user: process.env.NODE_ENV === 'production' ? recipient.id : 'U03TC9WA9',
                             }, function (err, res) {
                                 if (err) {
                                     console.error(err);
@@ -84,11 +84,9 @@ module.exports = function (bot, message) {
 
                                 var channelId = res.ok ? res.channel.id : null;
                                 if (channelId) {
-                                    var message = '*' + recipient.slackUser.name + '\'s* plan for the day is: \n'
-                                        + '>>> ' + message.text;
                                     botHemera.api.chat.postMessage({
                                         channel: channelId,
-                                        text: message,
+                                        text: publicUpdate,
                                         as_user: true
                                     }, function(err) {
                                         if (err) {
