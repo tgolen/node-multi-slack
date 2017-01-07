@@ -38,8 +38,7 @@ exports.start = function start() {
 
     // Nag people about posting updates every hour
     nag();
-    setInterval(nag, 1000 * 5);
-    //setInterval(nag, 1000 * 60 * 60);
+    setInterval(nag, 1000 * 60 * 60);
 
     return bot;
 };
