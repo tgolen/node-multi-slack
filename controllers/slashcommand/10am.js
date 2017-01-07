@@ -1,4 +1,5 @@
 var slashcommand = require('./index');
+var hemera = require('../hemera');
 var controller;
 
 /**
@@ -8,6 +9,7 @@ var controller;
  */
 module.exports = function (bot, message) {
     controller = slashcommand.getController();
+    botHemera = hemera.getBot();
 
     // Get the user object that is making the request
     controller.storage.users.get(message.user, function(err, user) {
@@ -32,8 +34,7 @@ module.exports = function (bot, message) {
             }
 
             // Send their update to our main 10AM channel
-            bot.api.chat.postMessage({
-                token: process.env.SLASHCOMMAND_10AM_TOKEN,
+            botHemera.api.chat.postMessage({
                 channel: '10am',
                 text: message.text,
                 as_user: false,
@@ -63,7 +64,7 @@ module.exports = function (bot, message) {
                             // Don't send a message to the user that's posting the update
                             if (recipient.id === user.id) {
                                 console.log('[HEMERA] Not posting a message to myself: %s', user.slackUser.name);
-                                //continue;
+                                continue;
                             }
 
                             // Don't send a message to this person if they snoozed the user posting the update
@@ -73,8 +74,7 @@ module.exports = function (bot, message) {
                             }
 
                             // Open an IM channel and post to it
-                            bot.api.im.open({
-                                token: process.env.SLASHCOMMAND_10AM_TOKEN,
+                            botHemera.api.im.open({
                                 user: recipient.id
                             }, function (err, res) {
                                 if (err) {
@@ -86,8 +86,7 @@ module.exports = function (bot, message) {
                                 if (channelId) {
                                     var message = '*' + recipient.slackUser.name + '\'s* plan for the day is: \n'
                                         + '>>> ' + message.text;
-                                    bot.api.chat.postMessage({
-                                        token: process.env.SLASHCOMMAND_10AM_TOKEN,
+                                    botHemera.api.chat.postMessage({
                                         channel: channelId,
                                         text: message,
                                         as_user: true
