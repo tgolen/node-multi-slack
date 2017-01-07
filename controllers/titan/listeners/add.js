@@ -1,4 +1,5 @@
-var Moment = require('moment');
+var moment = require('moment');
+var tz = require('moment-timezone');
 var controller = require('../index').getController();
 
 /**
@@ -17,7 +18,7 @@ module.exports = function add(bot, message) {
             if (err) {
                 console.error(err);
             }
-            if (!user) {
+            if (!user || !user.slackUser) {
                 convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');
                 return;
             }
@@ -59,9 +60,9 @@ module.exports = function add(bot, message) {
             var startDateString = datePortionArray[0];
             var lengthOfTimeString = datePortionArray.length > 1 ? datePortionArray[1] : null;
 
-            var startDate = new Moment(startDateString);
+            var startDate = moment(startDateString).tz(user.slackUser.tz);
             var lengthOfTimeArray = lengthOfTimeString ? lengthOfTimeString.split(' ') : null;
-            var endDate = lengthOfTimeArray ? new Moment(startDate).add(lengthOfTimeArray[0], lengthOfTimeArray[1]) : startDate;
+            var endDate = lengthOfTimeArray ? moment(startDate).tz(user.slackUser.tz).add(lengthOfTimeArray[0], lengthOfTimeArray[1]) : startDate;
 
             // Validate our options
             if (!startDate.isValid()) {
@@ -70,7 +71,7 @@ module.exports = function add(bot, message) {
             }
 
             // Confirm to the user what we will be adding
-            var confirmationMessage = 'I will remember that you will be gone on ' + startDate.format('llll');
+            var confirmationMessage = 'I will remember that you will be gone on *' + startDate.format('llll') + '*';
             if (startDate !== endDate) {
                 confirmationMessage += ' for ' + startDate.from(endDate, true);
             }

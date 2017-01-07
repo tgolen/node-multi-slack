@@ -1,4 +1,5 @@
-var Moment = require('moment');
+var moment = require('moment');
+var tz = require('moment-timezone');
 var controller = require('../index').getController();
 
 /**
@@ -25,22 +26,23 @@ module.exports = function list(bot, message) {
             }
 
             var message = '';
-            var now = new Moment();
 
             // Loop through each user
             for (var i = 0; i < users.length; i++) {
                 var user = users[i];
                 var username = user.slackUser ? user.slackUser.real_name : user.id;
 
-                if (!user.events || !user.events.length) {
+                if (!user.events || !user.events.length || !user.slackUser) {
                     continue;
                 }
+
+                var now = moment().tz(user.slackUser.tz);
 
                 // Loop through each event and find one happening today
                 for (var j = 0; j < user.events.length; j++) {
                     var event = user.events[j];
-                    var start = new Moment(event.start);
-                    var end = new Moment(event.end);
+                    var start = moment(event.start).tz(user.slackUser.tz);
+                    var end = moment(event.end).tz(user.slackUser.tz);
 
                     if (now.isBetween(start, end, 'day', '[]')) {
                         message += '*' + username + '*: ' + start.format('llll') + ' - ' + end.format('llll');

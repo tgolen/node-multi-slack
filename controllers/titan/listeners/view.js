@@ -1,5 +1,3 @@
-var Moment = require('moment');
-var channels = require('../channels');
 var controller = require('../index').getController();
 
 /**

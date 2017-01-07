@@ -1,4 +1,5 @@
-var Moment = require('moment');
+var moment = require('moment');
+var tz = require('moment-timezone');
 var controller = require('../index').getController();
 
 /**
@@ -25,7 +26,7 @@ module.exports = function list(bot, message) {
             }
 
             var reply = '';
-            var date = new Moment(message.match[1]);
+            var date = moment(message.match[1]);
 
             if (!date.isValid()) {
                 convo.addMessage('No one could possibly understand a date like: ' + message.match[1] + '. I can only understand the YYYY-MM-DD format.', 'default');
@@ -37,17 +38,18 @@ module.exports = function list(bot, message) {
                 var user = users[i];
                 var username = user.slackUser ? user.slackUser.real_name : user.id;
 
-                if (!user.events || !user.events.length) {
+                if (!user.events || !user.events.length || !user.slackUser) {
                     continue;
                 }
 
                 // Loop through each event and find one happening today
                 for (var j = 0; j < user.events.length; j++) {
                     var event = user.events[j];
-                    var start = new Moment(event.start);
-                    var end = new Moment(event.end);
+                    var now = moment(message.match[1]).tz(user.slackUser.tz);
+                    var start = moment(event.start).tz(user.slackUser.tz);
+                    var end = moment(event.end).tz(user.slackUser.tz);
 
-                    if (date.isBetween(start, end, 'day', '[]')) {
+                    if (now.isBetween(start, end, 'day', '[]')) {
                         reply += '*' + username + '*: ' + start.format('llll') + ' - ' + end.format('llll');
                         if (event.reason && event.reasonPrefix) {
                             reply += ' _' + event.reasonPrefix + ' ' + event.reason + '_';

@@ -1,4 +1,5 @@
-var Moment = require('moment');
+var moment = require('moment');
+var tz = require('moment-timezone');
 var controller = require('../index').getController();
 
 /**
@@ -19,7 +20,7 @@ module.exports = function list(bot, message) {
                 console.error(err);
             }
 
-            if (!user) {
+            if (!user || !user.slackUser) {
                 convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');
                 return;
             }
@@ -27,19 +28,19 @@ module.exports = function list(bot, message) {
             if (!user.events || !user.events.length) {
                 convo.addMessage('You have not set up any out of the office times.', 'default');
                 return;
-            } else {
-                var message = '';
-                for (var i = 0; i < user.events.length; i++) {
-                    var start = new Moment(user.events[i].start);
-                    var end = new Moment(user.events[i].end);
-                    message += '`' + i + '` ' + start.format('dddd, MMMM Do YYYY, h:mm:ss a') + ' - ' + end.format('dddd, MMMM Do YYYY, h:mm:ss a');
-                    if (user.events[i].reason && user.events[i].reasonPrefix) {
-                        message += ' ' + user.events[i].reasonPrefix + ' ' + user.events[i].reason;
-                    }
-                    message += '\n';
-                }
-                convo.addMessage(message, 'default');
             }
+
+            var message = '';
+            for (var i = 0; i < user.events.length; i++) {
+                var start = moment(user.events[i].start).tz(user.slackUser.tz);
+                var end = moment(user.events[i].end).tz(user.slackUser.tz);
+                message += '`' + i + '` *' + start.format('llll') + ' - ' + end.format('llll') + '*';
+                if (user.events[i].reason && user.events[i].reasonPrefix) {
+                    message += ' _' + user.events[i].reasonPrefix + ' ' + user.events[i].reason + '_';
+                }
+                message += '\n';
+            }
+            convo.addMessage(message, 'default');
         });
     });
 };

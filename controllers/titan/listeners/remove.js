@@ -1,12 +1,11 @@
-var Moment = require('moment');
 var controller = require('../index').getController();
 
 /**
- * Reponds with a private message when someone says "hi"
+ * Removes an event from their OOO calendar
  * @param  {Object} bot
  * @param  {Object} message
  */
-module.exports = function add(bot, message) {
+module.exports = function remove(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
             return console.error(err);
