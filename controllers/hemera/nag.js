@@ -17,12 +17,13 @@ module.exports = function nag() {
         for (var i = 0; i < users.length; i++) {
             var user = users[i];
 
-            // They need to have a slack profile
-            if (!user.slackUser) {
+            // They need to have a slack profile and they can't be a bot
+            if (!user.slackUser || user.slackUser.is_bot) {
                 continue;
             }
 
-            var usersNow = moment().tz(user.slackUser.tz);
+            var tz = user.slackUser.tz || undefined;
+            var usersNow = tz ? moment().tz(tz) : moment();
             var dayOfTheWeek = usersNow.format('dd');
 
             // Don't do any nagging on the weekend
@@ -36,8 +37,8 @@ module.exports = function nag() {
                 var userIsOOO = false;
                 for (var j = 0; j < user.events.length; j++) {
                     var event = user.events[j];
-                    var start = moment(event.start).tz(user.slackUser.tz);
-                    var end = moment(event.end).tz(user.slackUser.tz);
+                    var start = moment(event.start).tz(tz);
+                    var end = moment(event.end).tz(tz);
                     if (dayOfTheWeek.isBetween(start, end, 'day', '[]')) {
                         userIsOOO = true;
                     }
@@ -48,8 +49,8 @@ module.exports = function nag() {
                 }
             }
 
-            var lastUpdatedTime = user.lastUpdated_at ? moment(lastUpdated_at).tz(user.slackUser.tz) : null;
-            var timeLastNagged = user.lastNag_at ? moment(user.lastNag_at).tz(user.slackUser.tz) : null;
+            var lastUpdatedTime = user.lastUpdated_at ? moment(lastUpdated_at).tz(tz) : null;
+            var timeLastNagged = user.lastNag_at ? moment(user.lastNag_at).tz(tz) : null;
             var daysSinceLastUpdated = lastUpdatedTime ? usersNow.diff(lastUpdatedTime, 'days') : null;
             var daysSinceNagged = timeLastNagged ? usersNow.diff(timeLastNagged, 'days') : null;
 

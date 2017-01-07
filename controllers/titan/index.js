@@ -1,8 +1,6 @@
 var Botkit = require('botkit');
-var controller = Botkit.slackbot({
-    debug: process.env.NODE_ENV !== 'production',
-    storage: require('botkit-storage-mongo')({mongoUri: process.env.DATABASE_URL})
-});
+var updateSlackProfile = require('../utils/updateSlackProfile');
+var controller;
 var bot;
 
 /**
@@ -11,12 +9,19 @@ var bot;
  * @returns {Object} the created slackbot
  */
 exports.start = function start() {
+    controller = Botkit.slackbot({
+        debug: process.env.NODE_ENV !== 'production',
+        storage: require('botkit-storage-mongo')({mongoUri: process.env.DATABASE_URL})
+    });
+
     bot = controller.spawn({
         token: process.env.SLACKBOT_TOKEN_TITAN
     }).startRTM();
 
     // Keep their slack profile up to date for every message
-    controller.on('message_received', require('../utils/updateSlackProfile'));
+    controller.on('message_received', function(bot, message) {
+        updateSlackProfile(bot, message, controller);
+    });
 
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));
     controller.hears(['reset'], 'direct_message,direct_mention,mention', require('./listeners/reset'));

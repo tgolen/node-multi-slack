@@ -1,5 +1,6 @@
 var Botkit = require('botkit');
 var nag = require('./nag');
+var updateSlackProfile = require('../utils/updateSlackProfile');
 var controller;
 var bot;
 
@@ -19,7 +20,9 @@ exports.start = function start() {
     }).startRTM();
 
     // Keep their slack profile up to date for every message
-    controller.on('message_received', require('../utils/updateSlackProfile'));
+    controller.on('message_received', function(bot, message) {
+        updateSlackProfile(bot, message, controller);
+    });
 
     // Setup our message listeners
     controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', require('./listeners/hi'));

@@ -1,56 +1,52 @@
-var hemera = require('../controllers/hemera');
+var slashcommand = require('./index');
+var controller;
 
 /**
- * Handles the 10AM express route
- * @param  {Express.Request} req
- * @param  {Express.Response} res
+ * Responds to the 10AM slash command
+ * @param  {Object} bot
+ * @param  {Object} message
  */
-module.exports = function (req, res) {
-    var bot = hemera.getBot();
-    var controller = hemera.getController();
-
-    if (req.body.token !== process.env.SLASHCOMMAND_10AM_TOKEN) {
-        return res.status(403).send();
-    }
+module.exports = function (bot, message) {
+    controller = slashcommand.getController();
 
     // Get the user object that is making the request
-    controller.storage.users.get(req.body.user_id, function(err, user) {
+    controller.storage.users.get(message.user, function(err, user) {
         if (err) {
-            res.send('Ooops, there was an error. How embarassing. ' + err.toString());
+            bot.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
             console.error(err);
         }
 
         if (!user || !user.slackUser) {
-            res.send('I don\'t know you yet. Why don\'t you say "@hemera hi" and introduce yourself.');
+            bot.replyPrivate('I don\'t know you yet. Why don\'t you say "@hemera hi" and introduce yourself.');
             return;
         }
 
         // Record the last time the user made an update and what that update was
         user.lastUpdate_at = new Date();
-        user.lastUpdate = req.body.text;
+        user.lastUpdate = message.text;
         controller.storage.users.save(user, function(err) {
             if (err) {
                 console.error(err);
-                res.send('Ooops, there was an error. How embarassing. ' + err.toString());
+                bot.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
                 return;
             }
 
             // Send their update to our main 10AM channel
             bot.api.chat.postMessage({
                 channel: '10am',
-                text: req.body.text,
+                text: message.text,
                 as_user: false,
                 username: user.slackUser.name,
                 icon_url: user.slackUser.profile.image_72,
             }, function(err) {
                 if (err) {
                     console.error(err);
-                    res.send('Ooops, there was an error. How embarassing. ' + err.toString());
+                    bot.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
                     return;
                 }
 
                 // Respond to the API at this point so the rest is done after the request
-                res.send('OK, I will post your update!');
+                bot.replyPrivate('OK, I will post your update!');
 
                 // Now send a PM to each of our users with that update
                 controller.storage.users.all(function(err, users) {
@@ -87,7 +83,7 @@ module.exports = function (req, res) {
                                 var channelId = res.ok ? res.channel.id : null;
                                 if (channelId) {
                                     var message = '*' + recipient.slackUser.name + '\'s* plan for the day is: \n'
-                                        + '>>> ' + req.body.text;
+                                        + '>>> ' + message.text;
                                     bot.api.chat.postMessage({
                                         channel: channelId,
                                         text: message,
