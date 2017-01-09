@@ -41,14 +41,16 @@ exports.start = function start() {
         bot = connectedBot;
 
         // Check every minute if it's the top of the hour
+        var nagInterval = process.env.NODE_ENV === 'production' ? 1000 * 60 : 1000 * 5;
         setInterval(function() {
             var now = new Date();
 
-            // Only nag at the top of the hour
-            if (now.getMinutes() === 0) {
-                nag();
+            // Only nag at the top of the hour for production
+            if (process.env.NODE_ENV === 'production' && now.getMinutes() === 0) {
+                return nag();
             }
-        }, 1000 * 60);
+            nag();
+        }, nagInterval);
     });
 
     return bot;

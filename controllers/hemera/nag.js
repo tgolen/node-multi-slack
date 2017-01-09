@@ -1,5 +1,6 @@
 var moment = require('moment');
 var tz = require('moment-timezone');
+var async = require('async');
 var hemera = require('./index');
 var whitelist = require('../utils/10amwhitelist');
 
@@ -15,13 +16,12 @@ module.exports = function nag() {
             return console.trace(err);
         }
 
-        for (var i = 0; i < users.length; i++) {
-            var user = users[i];
+        async.eachSeries(users, function (user, done) {
 
             // They need to have a slack profile and they can't be a bot
             // and they must be in the whitelist
             if (!user.slackUser || user.slackUser.is_bot || whitelist.indexOf(user.slackUser.name) === -1) {
-                continue;
+                return done();
             }
 
             var tz = user.slackUser.tz || undefined;
@@ -31,7 +31,7 @@ module.exports = function nag() {
             // Don't do any nagging on the weekend
             if (dayOfTheWeek === 'Su' || dayOfTheWeek === 'Sa') {
                 console.log('[HEMERA] No nagging on the weekends');
-                continue;
+                return done();
             }
 
             // Don't do any nagging when they are OOO
@@ -47,7 +47,7 @@ module.exports = function nag() {
                 }
                 if (userIsOOO) {
                     console.log('[HEMERA] No nagging while the user is out of the office');
-                    continue;
+                    return done();
                 }
             }
 
@@ -64,7 +64,7 @@ module.exports = function nag() {
             // Either they haven't sent an update yet, or it's been more than a day since their last update
             if (!lastUpdatedTime || daysSinceLastUpdated > 0) {
                 // They haven't sent an update yet, so see if it's after 11AM (give them an extra hour)
-                if (usersNow.format('H') > 11) {
+                if (usersNow.format('H') >= 11) {
                     console.log('[HEMERA] %s', timeLastNagged ? 'I last nagged them ' + daysSinceNagged + ' days ago' : 'I haven\'t nagged them yet.');
 
                     // If we have never nagged them, or it's been more than a day, then we will nag them
@@ -74,7 +74,8 @@ module.exports = function nag() {
                         // Send nag
                         bot.startPrivateConversation({user: user.id}, function(err, convo) {
                             if (err) {
-                                return console.trace(err);
+                                console.trace(err);
+                                return done();
                             }
 
                             convo.say('Oh goodness, you haven\'t sent your 10AM update today! Why don\'t you do that right now with `/10am`?');
@@ -83,17 +84,19 @@ module.exports = function nag() {
                             user.lastNag_at = new Date();
                             controller.storage.users.save(user, function(err) {
                                 if (err) {
-                                    return console.trace(err);
+                                    console.trace(err);
+                                    return done();
                                 }
                                 console.log('[HEMERA] db update for lastNag_at for %s was successful', user.slackUser.name);
-                                console.log(arguments);
+                                done();
                             });
                         });
                     } else {
                         console.log('[HEMERA] I have already nagged them today');
+                        done();
                     }
                 }
             }
-        }
+        });
     });
 };
