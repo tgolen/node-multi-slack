@@ -15,8 +15,9 @@ module.exports = function (bot, message) {
     // Get the user object that is making the request
     controller.storage.users.get(message.user, function(err, user) {
         if (err) {
-            botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
+            bot.res.send('Ooops, there was an error. How embarassing. ' + err.toString());
             console.trace(err);
+            return;
         }
 
         if (!user || !user.slackUser) {
@@ -30,7 +31,7 @@ module.exports = function (bot, message) {
         controller.storage.users.save(user, function(err) {
             if (err) {
                 console.trace(err);
-                botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
+                bot.res.send('Ooops, there was an error. How embarassing. ' + err.toString());
                 return;
             }
 
@@ -44,12 +45,12 @@ module.exports = function (bot, message) {
             }, function(err) {
                 if (err) {
                     console.trace(err);
-                    botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
+                    bot.res.send('Ooops, there was an error. How embarassing. ' + err.toString());
                     return;
                 }
 
                 // Respond to the API at this point so the rest is done after the request
-                botHemera.replyPrivate('OK, I will post your update!');
+                bot.res.send('OK, I will post your update!');
 
                 // Now send a PM to each of our users with that update
                 controller.storage.users.all(function(err, users) {
