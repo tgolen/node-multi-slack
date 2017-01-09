@@ -66,6 +66,11 @@ module.exports = function (bot, message) {
                         for (var i = 0; i < users.length; i++) {
                             var recipient = users[i];
 
+                            if (recipient.slackUser && recipient.slackUser.is_bot) {
+                                console.log('[HEMERA] Not posting a message to another bot: %s', recipient.slackUser.name);
+                                continue;
+                            }
+
                             // Only process our whitelist
                             if (whitelist.indexOf(recipient.slackUser.name) === -1) {
                                 console.log('[HEMERA] Not posting a message to a user not in the beta: %s', recipient.slackUser.name);
@@ -85,7 +90,7 @@ module.exports = function (bot, message) {
                             }
 
                             // Open an IM channel and post to it
-                            console.log('[HEMERA] Postion a private message to: %s', recipient.slackUser.name);
+                            console.log('[HEMERA] Posting a private message to: %s', recipient.slackUser.name);
                             botHemera.api.im.open({
                                 user: process.env.NODE_ENV === 'production' ? recipient.id : 'U03TC9WA9',
                             }, function (err, res) {
@@ -93,6 +98,7 @@ module.exports = function (bot, message) {
                                     console.trace(err);
                                     return;
                                 }
+                                console.log(res);
 
                                 var channelId = res.ok ? res.channel.id : null;
                                 if (channelId) {
@@ -100,10 +106,11 @@ module.exports = function (bot, message) {
                                         channel: channelId,
                                         text: publicUpdate,
                                         as_user: true
-                                    }, function(err) {
+                                    }, function(err, res) {
                                         if (err) {
-                                            console.trace(err);
+                                            return console.trace(err);
                                         }
+                                        console.log(res);
                                     });
                                 }
                             });
