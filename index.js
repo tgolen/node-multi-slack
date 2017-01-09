@@ -5,7 +5,7 @@ var db = require('./lib/db');
 
 db.connect(function(err, connection) {
     if (err) {
-        return console.error(err);
+        return console.trace(err);
     }
     console.log("Connected successfully to DB");
 

@@ -8,13 +8,13 @@ var controller = require('../index').getController();
 module.exports = function remove(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         // Make sure we have a user first
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
             }
             if (!user) {
                 convo.transitionTo('setup', 'I don\'t know you, let me introduce myself.');

@@ -15,7 +15,7 @@ exports.start = function start() {
 
     controller.setupWebserver(process.env.PORT || 3000, function(err, express_webserver) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         // Add multiple slash command tokens to this array

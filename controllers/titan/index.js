@@ -33,7 +33,7 @@ exports.start = function start() {
         token: process.env.SLACKBOT_TOKEN_TITAN
     }).startRTM(function(err, connectedBot) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
         bot = connectedBot;
     });

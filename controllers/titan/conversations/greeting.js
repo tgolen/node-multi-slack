@@ -9,7 +9,7 @@ module.exports = function greeting(convo, message) {
 
     controller.storage.users.get(message.user, function(err, user) {
         if (err) {
-            console.error(err);
+            console.trace(err);
         }
 
         // Their user hasn't been setup yet, so send them to the setup

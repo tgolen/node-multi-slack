@@ -14,14 +14,14 @@ module.exports = function hi(bot, message) {
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
                 return;
             }
 
             if (!user) {
                 bot.api.users.info({user: message.user}, function(err, res) {
                     if (err) {
-                        return console.error(err);
+                        return console.trace(err);
                     }
 
                     var newUser = {

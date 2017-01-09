@@ -18,7 +18,7 @@ module.exports = function hi(bot, message) {
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
                 return;
             }
 
@@ -29,7 +29,7 @@ module.exports = function hi(bot, message) {
 
             controller.storage.users.get(targetUserId, function(err, userToView) {
                 if (err) {
-                    console.error(err);
+                    console.trace(err);
                     return;
                 }
 

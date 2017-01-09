@@ -8,14 +8,14 @@ var controller = require('../index').getController();
 module.exports = function reset(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         convo.addMessage('I have forced myself to forget all your settings', 'default');
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
             }
             var newUser = {
                 id: message.user,

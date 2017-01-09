@@ -10,14 +10,14 @@ var controller = require('../index').getController();
 module.exports = function list(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         convo.addMessage('This is when you will be out of the office:', 'default');
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
             }
 
             if (!user || !user.slackUser) {

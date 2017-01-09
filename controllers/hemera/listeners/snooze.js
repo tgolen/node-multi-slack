@@ -18,7 +18,7 @@ module.exports = function hi(bot, message) {
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
                 return;
             }
 
@@ -34,7 +34,7 @@ module.exports = function hi(bot, message) {
             // The target user may not be registered yet, but that's OK. This is really just a failsafe
             bot.api.users.info({user: targetUserId}, function(err, res) {
                 if (err) {
-                    return console.error(err);
+                    return console.trace(err);
                 }
 
                 if (user.snooze.indexOf(res.user.name) > -1) {

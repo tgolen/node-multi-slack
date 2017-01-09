@@ -8,7 +8,7 @@ var controller = require('../index').getController();
 module.exports = function reset(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
     convo.addMessage('You can *add* events with `add <date-time> for <length of time> at/in/on <reason>`. For example:\n'

@@ -36,7 +36,7 @@ exports.start = function start() {
         token: process.env.SLACKBOT_TOKEN_HEMERA
     }).startRTM(function(err, connectedBot) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
         bot = connectedBot;
 

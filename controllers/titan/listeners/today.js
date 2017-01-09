@@ -10,12 +10,12 @@ var controller = require('../index').getController();
 module.exports = function list(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         controller.storage.users.get(message.user, function(err, user) {
             if (err) {
-                console.error(err);
+                console.trace(err);
             }
 
             if (!user || !user.slackUser) {
@@ -28,7 +28,7 @@ module.exports = function list(bot, message) {
 
             controller.storage.users.all(function(err, users) {
                 if (err) {
-                    console.error(err);
+                    console.trace(err);
                 }
 
                 if (!users || !users.length) {

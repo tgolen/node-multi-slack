@@ -9,7 +9,7 @@ var conversationSetup = require('../conversations/setup');
 module.exports = function hi(bot, message) {
     bot.startPrivateConversation(message, function(err, convo) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         conversationGreeting(convo, message);

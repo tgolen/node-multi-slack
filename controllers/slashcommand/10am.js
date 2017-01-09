@@ -16,7 +16,7 @@ module.exports = function (bot, message) {
     controller.storage.users.get(message.user, function(err, user) {
         if (err) {
             botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
-            console.error(err);
+            console.trace(err);
         }
 
         if (!user || !user.slackUser) {
@@ -29,7 +29,7 @@ module.exports = function (bot, message) {
         user.lastUpdate = message.text;
         controller.storage.users.save(user, function(err) {
             if (err) {
-                console.error(err);
+                console.trace(err);
                 botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
                 return;
             }
@@ -43,7 +43,7 @@ module.exports = function (bot, message) {
                 as_user: true
             }, function(err) {
                 if (err) {
-                    console.error(err);
+                    console.trace(err);
                     botHemera.replyPrivate('Ooops, there was an error. How embarassing. ' + err.toString());
                     return;
                 }
@@ -54,7 +54,7 @@ module.exports = function (bot, message) {
                 // Now send a PM to each of our users with that update
                 controller.storage.users.all(function(err, users) {
                     if (err) {
-                        console.error(err);
+                        console.trace(err);
                         return;
                     }
 
@@ -84,7 +84,7 @@ module.exports = function (bot, message) {
                                 user: process.env.NODE_ENV === 'production' ? recipient.id : 'U03TC9WA9',
                             }, function (err, res) {
                                 if (err) {
-                                    console.error(err);
+                                    console.trace(err);
                                     return;
                                 }
 
@@ -96,7 +96,7 @@ module.exports = function (bot, message) {
                                         as_user: true
                                     }, function(err) {
                                         if (err) {
-                                            console.error(err);
+                                            console.trace(err);
                                         }
                                     });
                                 }

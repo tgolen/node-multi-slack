@@ -12,7 +12,7 @@ module.exports = function nag() {
 
     controller.storage.users.all(function(err, users) {
         if (err) {
-            return console.error(err);
+            return console.trace(err);
         }
 
         for (var i = 0; i < users.length; i++) {
@@ -74,7 +74,7 @@ module.exports = function nag() {
                         // Send nag
                         bot.startPrivateConversation({user: user.id}, function(err, convo) {
                             if (err) {
-                                return console.error(err);
+                                return console.trace(err);
                             }
 
                             convo.say('Oh goodness, you haven\'t sent your 10AM update today! Why don\'t you do that right now with `/10am`?');
