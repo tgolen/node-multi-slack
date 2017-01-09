@@ -69,7 +69,7 @@ module.exports = function nag() {
 
                     // If we have never nagged them, or it's been more than a day, then we will nag them
                     if (!timeLastNagged || daysSinceNagged > 0) {
-                        console.log('[HEMERA] I am nagging them now because its past 11AM for them and I have\'nt nagged them yet.');
+                        console.log('[HEMERA] I am nagging %s now because its past 11AM for them and I haven\'t nagged them yet.', user.slackUser.name);
 
                         // Send nag
                         bot.startPrivateConversation({user: user.id}, function(err, convo) {
@@ -85,7 +85,8 @@ module.exports = function nag() {
                                 if (err) {
                                     return console.trace(err);
                                 }
-                                console.log('[HEMERA] db update for lastNage_at was successful');
+                                console.log('[HEMERA] db update for lastNag_at for %s was successful', user.slackUser.name);
+                                console.log(arguments);
                             });
                         });
                     } else {
