@@ -9,6 +9,8 @@ var controller;
  * @param  {Object} message
  */
 module.exports = function (bot, message) {
+    console.log('[HEMERA] Got a 10AM update');
+    console.log(message);
     controller = slashcommand.getController();
     botHemera = hemera.getBot();
 
@@ -51,6 +53,7 @@ module.exports = function (bot, message) {
 
                 // Respond to the API at this point so the rest is done after the request
                 bot.res.send('OK, I will post your update!');
+                console.log('[HEMERA] posted 10am update to public slack channel');
 
                 // Now send a PM to each of our users with that update
                 controller.storage.users.all(function(err, users) {
@@ -64,7 +67,8 @@ module.exports = function (bot, message) {
                             var recipient = users[i];
 
                             // Only process our whitelist
-                            if (!whitelist.indexOf(recipient.slackUser.name) > -1) {
+                            if (whitelist.indexOf(recipient.slackUser.name) === -1) {
+                                console.log('[HEMERA] Not posting a message to a user not in the beta: %s', recipient.slackUser.name);
                                 continue;
                             }
 
@@ -81,6 +85,7 @@ module.exports = function (bot, message) {
                             }
 
                             // Open an IM channel and post to it
+                            console.log('[HEMERA] Postion a private message to: %s', recipient.slackUser.name);
                             botHemera.api.im.open({
                                 user: process.env.NODE_ENV === 'production' ? recipient.id : 'U03TC9WA9',
                             }, function (err, res) {
