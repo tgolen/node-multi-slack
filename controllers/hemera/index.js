@@ -49,7 +49,9 @@ exports.start = function start() {
             if (process.env.NODE_ENV === 'production' && now.getMinutes() === 0) {
                 return nag();
             }
-            nag();
+            if (process.env.NODE_ENV !== 'production') {
+                nag();
+            }
         }, nagInterval);
     });
 
