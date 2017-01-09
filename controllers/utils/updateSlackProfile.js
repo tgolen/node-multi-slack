@@ -24,6 +24,7 @@ module.exports = function updateSlackProfile(bot, message, controller) {
 
         bot.api.users.info({user: message.user}, function(err, res) {
             if (err) {
+                console.error('could not get info for user %s', message.user);
                 return console.trace(err);
             }
 
