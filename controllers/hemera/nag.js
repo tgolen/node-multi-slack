@@ -1,6 +1,7 @@
 var moment = require('moment');
 var tz = require('moment-timezone');
 var hemera = require('./index');
+var whitelist = require('../utils/10amwhitelist');
 
 /**
  * Nag all our users once an our to see if they need to send an update
@@ -18,7 +19,8 @@ module.exports = function nag() {
             var user = users[i];
 
             // They need to have a slack profile and they can't be a bot
-            if (!user.slackUser || user.slackUser.is_bot) {
+            // and they must be in the whitelist
+            if (!user.slackUser || user.slackUser.is_bot || whitelist.indexOf(user.slackUser.name) === -1) {
                 continue;
             }
 
@@ -39,7 +41,7 @@ module.exports = function nag() {
                     var event = user.events[j];
                     var start = moment(event.start).tz(tz);
                     var end = moment(event.end).tz(tz);
-                    if (dayOfTheWeek.isBetween(start, end, 'day', '[]')) {
+                    if (usersNow.isBetween(start, end, 'day', '[]')) {
                         userIsOOO = true;
                     }
                 }

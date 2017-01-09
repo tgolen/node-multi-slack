@@ -1,5 +1,6 @@
 var slashcommand = require('./index');
 var hemera = require('../hemera');
+var whitelist = require('../utils/10amwhitelist');
 var controller;
 
 /**
@@ -60,6 +61,11 @@ module.exports = function (bot, message) {
                     if (users && users.length) {
                         for (var i = 0; i < users.length; i++) {
                             var recipient = users[i];
+
+                            // Only process our whitelist
+                            if (!whitelist.indexOf(recipient.slackUser.name) > -1) {
+                                continue;
+                            }
 
                             // Don't send a message to the user that's posting the update
                             if (recipient.id === user.id) {
