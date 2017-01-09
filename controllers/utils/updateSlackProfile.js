@@ -9,6 +9,11 @@ var cacheTimeInMilliseconds = 1000 * 60 * 15;
  * @param  {Object} controller
  */
 module.exports = function updateSlackProfile(bot, message, controller) {
+    // This can come in as undefined, so we will just ignore those requests
+    if (!message.user) {
+        return;
+    }
+
     // Cache the user updates for 15 minutes so we don't do too much stuff
     if (userCache[message.user]) {
         var userCacheExpiration = moment(userCache[message.user]);
