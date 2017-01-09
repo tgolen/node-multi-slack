@@ -81,7 +81,12 @@ module.exports = function nag() {
 
                             // Save the last time we nagged them
                             user.lastNag_at = new Date();
-                            controller.storage.users.save(user, function() {});
+                            controller.storage.users.save(user, function(err) {
+                                if (err) {
+                                    return console.trace(err);
+                                }
+                                console.log('[HEMERA] db update for lastNage_at was successful');
+                            });
                         });
                     } else {
                         console.log('[HEMERA] I have already nagged them today');

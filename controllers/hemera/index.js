@@ -40,9 +40,15 @@ exports.start = function start() {
         }
         bot = connectedBot;
 
-        // Nag people about posting updates every hour
-        nag();
-        setInterval(nag, 1000 * 60 * 60);
+        // Check every minute if it's the top of the hour
+        setInterval(function() {
+            var now = new Date();
+
+            // Only nag at the top of the hour
+            if (now.getMinutes() === 0) {
+                nag();
+            }
+        }, 1000 * 60);
     });
 
     return bot;
